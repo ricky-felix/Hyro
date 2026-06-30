@@ -177,6 +177,7 @@ function AppRoutes() {
         <Route path="/app/undang/:id" element={<ProtectedRoute><Undang /></ProtectedRoute>} />
         <Route path="/app/gabung" element={<ProtectedRoute><GabungMasuk /></ProtectedRoute>} />
         <Route path="/app/gabung/preview" element={<ProtectedRoute><Gabung /></ProtectedRoute>} />
+        
         {/* Legacy / supporting routes — unchanged */}
         <Route path="/app/arisan" element={<ProtectedRoute><ArisanPage /></ProtectedRoute>} />
         <Route path="/app/arisan/buat" element={<ProtectedRoute><BuatArisan /></ProtectedRoute>} />

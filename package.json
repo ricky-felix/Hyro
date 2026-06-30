@@ -2,16 +2,17 @@
 	"name": "arisan-digital",
 	"private": true,
 	"scripts": {
-		"dev": "concurrently -n frontend,backend -c cyan,green \"npm run dev --prefix frontend\" \"npm run start:dev --prefix backend\"",
+		"dev": "concurrently -n frontend,backend -c cyan,green \"npm run dev --prefix frontend\" \"npm run backend\"",
 		"frontend": "npm run dev --prefix frontend",
-		"backend": "npm run start:dev --prefix backend",
-		"lint": "npm run lint --prefix frontend && npm run lint --prefix backend",
-		"test": "npm run test:run --prefix frontend && npm run test --prefix backend && npm run test:e2e --prefix frontend",
+		"backend": "cd backend && .venv/bin/uvicorn app.main:app --reload --port 3000",
+		"lint": "npm run lint --prefix frontend",
+		"test": "npm run test:run --prefix frontend && npm run test:backend && npm run test:e2e --prefix frontend",
 		"test:frontend": "npm run test:run --prefix frontend",
-		"test:backend": "npm run test --prefix backend",
+		"test:backend": "cd backend && .venv/bin/pytest",
 		"test:e2e": "npm run test:e2e --prefix frontend",
-		"build:all": "npm run build --prefix frontend && npm run build --prefix backend",
-		"install:all": "npm install && npm install --prefix frontend && npm install --prefix backend"
+		"build:all": "npm run build --prefix frontend",
+		"install:all": "npm install && npm install --prefix frontend && npm run install:backend",
+		"install:backend": "cd backend && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt"
 	},
 	"devDependencies": {
 		"concurrently": "^9.0.0"
