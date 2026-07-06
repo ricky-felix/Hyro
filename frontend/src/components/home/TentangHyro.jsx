@@ -31,9 +31,7 @@ export function TentangHyro() {
             Apa itu <span className="dg-name">Hyro</span>?
           </h2>
           <p>
-            <strong>Hyro</strong> artinya <em>poket</em> dalam bahasa Indonesia, karena aplikasi ini
-            menyimpan semua catatan arisan dan patungan di satu tempat. <strong>Hyro</strong> juga
-            merupakan singkatan dari <em>sistem arisan dan patungan</em>
+            Hyro reads as <strong>Hero</strong>. The infrastructure platform that turns informal savings groups (arisan) into automated, trust-enabled financial infrastructure. Simply evokes speed, flow, technology
           </p>
         </div>
         <div className="dg-pillars">
