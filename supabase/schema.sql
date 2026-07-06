@@ -1,5 +1,5 @@
 -- ─────────────────────────────────────────────────
--- Saku — Supabase Schema v3
+-- Hyro — Supabase Schema v3
 -- Stack: NestJS (API) + React/Vite/Tailwind (UI) + Supabase PostgreSQL
 --
 -- Access pattern:

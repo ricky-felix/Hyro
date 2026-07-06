@@ -21,18 +21,18 @@ const PILLARS = [
   },
 ];
 
-export function TentangSaku() {
+export function TentangHyro() {
   return (
-    <section className="block" id="Saku" aria-labelledby="Saku-heading">
+    <section className="block" id="Hyro" aria-labelledby="Hyro-heading">
       <Reveal className="wrap">
         <div className="sec-head reveal-up">
           <span className="kicker">Kenalan dulu</span>
-          <h2 id="Saku-heading">
-            Apa itu <span className="dg-name">Saku</span>?
+          <h2 id="Hyro-heading">
+            Apa itu <span className="dg-name">Hyro</span>?
           </h2>
           <p>
-            <strong>Saku</strong> artinya <em>poket</em> dalam bahasa Indonesia, karena aplikasi ini
-            menyimpan semua catatan arisan dan patungan di satu tempat. <strong>Saku</strong> juga
+            <strong>Hyro</strong> artinya <em>poket</em> dalam bahasa Indonesia, karena aplikasi ini
+            menyimpan semua catatan arisan dan patungan di satu tempat. <strong>Hyro</strong> juga
             merupakan singkatan dari <em>sistem arisan dan patungan</em>
           </p>
         </div>
@@ -56,4 +56,4 @@ export function TentangSaku() {
   );
 }
 
-export default TentangSaku;
+export default TentangHyro;

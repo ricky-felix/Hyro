@@ -22,14 +22,14 @@ export function Footer() {
     <footer className="site-foot" id="hubungi">
       <div className="foot-glow" />
       <div className="foot-watermark" aria-hidden="true">
-        Saku Saku Saku
+        Hyro Hyro Hyro
       </div>
       <div className="wrap foot-inner">
         <div className="foot-top">
           <div className="foot-brand">
             <img
               src="/Arisan-Digital-Full-Logo-no-bg.webp"
-              alt="Saku"
+              alt="Hyro"
             />
             <p>
               Arisan &amp; patungan dalam satu app — modern, transparan, dan
@@ -82,7 +82,7 @@ export function Footer() {
         </div>
 
         <div className="foot-bot">
-          <p>© 2026 Saku. All rights reserved.</p>
+          <p>© 2026 Hyro. All rights reserved.</p>
           <div className="foot-legal">
             <Link to="/syarat-ketentuan">Syarat &amp; Ketentuan</Link>
             <Link to="/kebijakan-privasi">Kebijakan Privasi</Link>

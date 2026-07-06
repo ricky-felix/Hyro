@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# run.sh — Execute Saku pgTAP test suite
+# run.sh — Execute Hyro pgTAP test suite
 # =============================================================================
 # Requirements (see README.md for full setup instructions):
 #   - psql CLI connected to a Postgres 15+ database
