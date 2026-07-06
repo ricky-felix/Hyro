@@ -6,6 +6,7 @@ import { handleAnchorClick } from "../../utils/smoothScroll";
 import { routes } from "../../config";
 
 const NAV_LINKS = [
+  { id: "Saku", label: "Saku" },
   { id: "siapa", label: "Untuk Siapa" },
   { id: "cara", label: "Cara Kerja" },
   { id: "produk", label: "Produk" },
@@ -24,10 +25,10 @@ export function Navbar() {
           href="#beranda"
           className="brand"
           onClick={(e) => handleAnchorClick(e, "beranda")}
-          aria-label="Digisan - Beranda"
+          aria-label="Saku - Beranda"
         >
           <img src="/Arisan-Digital-Logo-nobg.png" alt="Arisan Digital" />
-          <span>Digisan</span>
+          <span>Saku</span>
         </a>
 
         <div className="nav-links">

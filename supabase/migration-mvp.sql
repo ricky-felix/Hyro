@@ -1,5 +1,5 @@
 -- ─────────────────────────────────────────────────────────────
--- ARISAN DIGITAL — MVP migration
+-- Saku — MVP migration
 -- Purpose: make the app work directly from the browser, with no
 -- login (Supabase anonymous auth) and no NestJS backend.
 --

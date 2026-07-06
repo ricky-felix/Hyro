@@ -32,7 +32,7 @@ export function Hero() {
         <div className="reveal-up">
           <span className="eyebrow">
             <span className="dot" />
-            Arisan &amp; patungan dalam satu webapp
+            Arisan &amp; Patungan dalam satu webapp
           </span>
           <h1 className="hero-title">
              <span className="em">Arisan</span> transparan. {" "}

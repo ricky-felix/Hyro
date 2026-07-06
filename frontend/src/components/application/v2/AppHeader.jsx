@@ -6,7 +6,7 @@ import { Bell, DigiIcon, UserSingle } from "./icons";
 // ─────────────────────────────────────────────────────────────
 // AppHeader — global v2 app-shell top bar.
 //
-// This is the outermost chrome for the Digisan v2 app, sitting
+// This is the outermost chrome for the Hyro v2 app, sitting
 // *above* any per-page ScreenHeader. Think "app tab bar" rather
 // than "page header".
 //
@@ -14,7 +14,7 @@ import { Bell, DigiIcon, UserSingle } from "./icons";
 //   [logo + wordmark + greeting]  ...spacer...  [bell] [avatar]
 //
 // The inner content is aligned to the same 1200px band that
-// ScreenHeader uses (mx-auto max-w-[1200px] px-5 lg:px-8), so  
+// ScreenHeader uses (mx-auto max-w-[1200px] px-5 lg:px-8), so
 // the brand mark and the ScreenHeader's back button share the
 // same invisible horizontal rail on every screen.
 //
@@ -62,7 +62,7 @@ export default function AppHeader() {
         {/* ── Brand / logo (left) ──────────────────────────────────── */}
         <button
           type="button"
-          aria-label="Beranda Digisan"
+          aria-label="Beranda Hyro"
           onClick={() => navigate("/app")}
           className="flex shrink-0 cursor-pointer items-center gap-2.5 rounded-[10px] bg-transparent p-0 border-0 transition-opacity active:opacity-70"
         >
@@ -77,7 +77,7 @@ export default function AppHeader() {
           {/* Wordmark + greeting */}
           <span className="flex flex-col leading-none">
             <span className="text-[15px] font-extrabold tracking-[-0.02em] text-ink-1 lg:text-[16px]">
-              Digisan
+              Hyro
             </span>
             {/* Greeting sub-line: "Halo, Ricky" — soft contextual touch */}
             <span className="mt-[1px] max-w-[140px] overflow-hidden text-ellipsis whitespace-nowrap text-[11px] font-medium text-ink-2">

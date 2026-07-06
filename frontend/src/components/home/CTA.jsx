@@ -10,7 +10,7 @@ export function CTA() {
     <section className="block" aria-labelledby="cta-heading">
       <Reveal className="wrap">
         <div className="cta reveal-scale">
-          <h2 id="cta-heading">Mulai gunakan Arisan Digital</h2>
+          <h2 id="cta-heading">Mulai gunakan Saku</h2>
           <p>Coba sekarang dan buat grup pertamamu dalam beberapa menit saja.</p>
           <div className="acts">
             <Link className="btn btn-emerald btn-lg" to={routes.app}>

@@ -1,4 +1,4 @@
-# Digisan — Frontend Conventions
+# Saku — Frontend Conventions
 
 Guidance for working in `frontend/`. Read this before adding screens, components, or styles so the work stays consistent with the existing v2 app.
 

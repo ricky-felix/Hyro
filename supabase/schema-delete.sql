@@ -1,5 +1,5 @@
 -- ─────────────────────────────────────────────────
--- ARISAN DIGITAL — Drop All Tables (v3)
+-- Saku — Drop All Tables (v3)
 -- 20 tables: Core + Patungan + v3 additions + Monetization
 --
 -- ⚠ WARNING: This permanently deletes ALL data.

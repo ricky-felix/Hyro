@@ -121,6 +121,16 @@
 .lp .sec-head h2{font-size:clamp(30px,3.6vw,42px);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin:10px 0 14px}
 .lp .sec-head p{color:var(--ink-2);font-size:17px}
 
+/* tentang Saku */
+.lp .dg-name{background:linear-gradient(90deg,var(--emerald),var(--lavender-dark));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lp .dg-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.lp .dg-pillar{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:28px 24px;text-align:center;box-shadow:0 2px 10px rgba(11,18,32,.04)}
+.lp .dg-pillar-icon{display:inline-grid;place-items:center;width:52px;height:52px;border-radius:14px;background:var(--emerald-tint);font-size:24px;margin-bottom:14px}
+.lp .dg-pillar:nth-child(2) .dg-pillar-icon{background:var(--lavender-tint)}
+.lp .dg-pillar h3{font-size:18px;font-weight:800;margin-bottom:8px}
+.lp .dg-pillar p{color:var(--ink-2);font-size:15px;line-height:1.5}
+@media (max-width:760px){.lp .dg-pillars{grid-template-columns:1fr}}
+
 /* demographics */
 .lp .demo{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
 @media(max-width:900px){.lp .demo{grid-template-columns:repeat(2,1fr)}}

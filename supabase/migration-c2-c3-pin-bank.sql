@@ -1,5 +1,5 @@
 -- ─────────────────────────────────────────────────────────────
--- ARISAN DIGITAL — Migration C2 & C3
+-- Saku — Migration C2 & C3
 -- Workstream C2: PIN security columns on users table
 -- Workstream C3: bank_accounts table
 --
