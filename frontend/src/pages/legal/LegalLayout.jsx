@@ -29,12 +29,12 @@ export function LegalLayout({ title, lastUpdated, intro, children }) {
         <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-5">
           <Link
             to="/"
-            aria-label="Arisan Digital — kembali ke beranda"
+            aria-label="Hyro — kembali ke beranda"
             className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
           >
             <img
               src="/Arisan-Digital-Full-Logo-no-bg.webp"
-              alt="Arisan Digital"
+              alt="Hyro"
               style={{ height: "44px", width: "auto" }}
             />
           </Link>
@@ -78,7 +78,7 @@ export function LegalLayout({ title, lastUpdated, intro, children }) {
             </a>
             .
           </p>
-          <p className="mt-4">© 2026 Arisan Digital. All rights reserved.</p>
+          <p className="mt-4">© 2026 Hyro. All rights reserved.</p>
         </div>
       </main>
     </div>

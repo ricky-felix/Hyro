@@ -1,8 +1,8 @@
-# Arisan Digital — Database Tests (pgTAP)
+# Hyro — Database Tests (pgTAP)
 
 ## Overview
 
-This directory contains the pgTAP test suite for the Arisan Digital Supabase/Postgres schema. Every assertion is derived directly from `supabase/schema.sql` and the migration files — no tables or columns are invented.
+This directory contains the pgTAP test suite for the Hyro Supabase/Postgres schema. Every assertion is derived directly from `supabase/schema.sql` and the migration files — no tables or columns are invented.
 
 | File | What it tests | Approx. assertions |
 |------|---------------|-------------------|

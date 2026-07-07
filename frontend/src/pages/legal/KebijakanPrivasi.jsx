@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { LegalLayout, Section, List } from "./LegalLayout";
 
 // ── Kebijakan Privasi (Privacy Policy) ────────────────────────
-// Public, on-brand long-form page. Indonesian copy for Arisan Digital.
+// Public, on-brand long-form page. Indonesian copy for Hyro.
 // Template content — review with legal counsel before relying on it.
 export default function KebijakanPrivasi() {
   return (
@@ -14,13 +14,13 @@ export default function KebijakanPrivasi() {
         <>
           Privasi Anda penting bagi kami. Kebijakan Privasi ini menjelaskan data
           apa yang kami kumpulkan, bagaimana kami menggunakannya, dan hak-hak
-          Anda saat menggunakan Arisan Digital.
+          Anda saat menggunakan Hyro.
         </>
       }
     >
       <Section heading="1. Pendahuluan">
         <p>
-          Kebijakan ini berlaku untuk seluruh layanan Arisan Digital. Dengan
+          Kebijakan ini berlaku untuk seluruh layanan Hyro. Dengan
           menggunakan layanan kami, Anda menyetujui pengumpulan dan penggunaan
           informasi sesuai kebijakan ini, yang merupakan satu kesatuan dengan{" "}
           <Link

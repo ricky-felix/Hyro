@@ -133,7 +133,7 @@ function QrisThumbnail({ imagePath }) {
       </div>
       <div className="pms-qris-thumb-info">
         <div className="pms-qris-thumb-label">Scan QR untuk transfer</div>
-        <div className="pms-qris-thumb-hint">Gambar asli — bukan dari Arisan Digital</div>
+        <div className="pms-qris-thumb-hint">Gambar asli — bukan dari Hyro</div>
       </div>
     </div>
   );

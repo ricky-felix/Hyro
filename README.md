@@ -1,4 +1,4 @@
-# 🎉 Arisan Digital
+# 🎉 Hyro
 
 WebApp web modern untuk mendigitalisasi sistem arisan tradisional Indonesia, plus pembagian tagihan (patungan) bareng teman — dirancang khusus untuk pengguna Gen Z.
 

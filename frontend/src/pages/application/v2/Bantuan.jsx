@@ -9,8 +9,8 @@ import ScreenHeader from "../../../components/application/v2/ScreenHeader";
 // lightweight and don't pull in Relume/Accordion dependencies.
 const FAQS = [
   {
-    q: "Apa itu Arisan Digital?",
-    a: "Arisan Digital adalah WebApp untuk mengoordinasi arisan (tabungan bergilir) dan patungan (bagi tagihan) bersama teman, keluarga, atau rekan. WebApp mencatat siapa yang sudah bayar, menghitung giliran, serta mengirim pengingat otomatis.",
+    q: "Apa itu Hyro?",
+    a: "Hyro adalah WebApp untuk mengoordinasi arisan (tabungan bergilir) dan patungan (bagi tagihan) bersama teman, keluarga, atau rekan. WebApp mencatat siapa yang sudah bayar, menghitung giliran, serta mengirim pengingat otomatis.",
   },
   {
     q: "Apa bedanya Arisan dan Patungan?",
@@ -21,8 +21,8 @@ const FAQS = [
     a: "Buat grup arisan atau tagihan patungan, atur nominal, lalu bagikan link undangan atau QR ke anggotamu. Mereka cukup membuka link dan memasukkan nama — tanpa perlu daftar akun.",
   },
   {
-    q: "Apakah Arisan Digital menyimpan uang saya?",
-    a: "Tidak. Arisan Digital hanya lapisan koordinasi. Uangmu tidak pernah mampir di WebApp — pembayaran dilakukan langsung antar anggota lewat transfer bank atau e-wallet (GoPay, OVO, DANA, dll.).",
+    q: "Apakah Hyro menyimpan uang saya?",
+    a: "Tidak. Hyro hanya lapisan koordinasi. Uangmu tidak pernah mampir di WebApp — pembayaran dilakukan langsung antar anggota lewat transfer bank atau e-wallet (GoPay, OVO, DANA, dll.).",
   },
   {
     q: "Apa itu Bukti Transfer?",
@@ -99,7 +99,7 @@ export default function Bantuan() {
             <div>
               <p className="text-[18px] font-extrabold tracking-[-0.02em] text-ink-1">Tanya Jawab</p>
               <p className="mt-1 text-[13px] font-medium text-ink-3">
-                Pertanyaan umum tentang Arisan Digital
+                Pertanyaan umum tentang Hyro
               </p>
             </div>
           </div>
@@ -123,7 +123,7 @@ export default function Bantuan() {
               <a
                 href="mailto:arisandigital@outlook.com"
                 className="flex items-center justify-center gap-2 rounded-[13px] bg-brand-primary px-4 py-3 text-[14px] font-bold text-white transition-colors hover:bg-brand-primary-hover"
-                aria-label="Kirim email ke tim dukungan Arisan Digital"
+                aria-label="Kirim email ke tim dukungan Hyro"
               >
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
@@ -135,7 +135,7 @@ export default function Bantuan() {
           </div>
 
           <p className="mt-6 text-center text-[11px] font-medium text-ink-3">
-            Arisan Digital v1.0.0
+            Hyro v1.0.0
           </p>
         </div>
 

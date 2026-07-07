@@ -1,5 +1,5 @@
 - [Backend unit test infra](project-test-infra.md) — Jest 29+ts-jest, Supabase mock pattern, PaymentMethodType enum gotcha, 213-test baseline, skipped services
 - [E2E test setup](project-e2e-setup.md) — supertest e2e infra for NestJS backend; mock strategy, config, and how to run
-- [Arisan Digital DB schema & test harness](project-db-schema.md) — 21-table Supabase schema, migration order, pgTAP test suite at supabase/tests/
+- [Hyro DB schema & test harness](project-db-schema.md) — 21-table Supabase schema, migration order, pgTAP test suite at supabase/tests/
 - [Frontend Test Setup](project-test-setup.md) — Vitest 4 + jsdom config, commands, gotchas, coverage baseline (88% stmts, 240 tests, 2s)
 - [Frontend Playwright e2e](frontend-e2e-playwright.md) — 72-test Playwright suite, gotoApp() pattern, auth strategy, selector pitfalls

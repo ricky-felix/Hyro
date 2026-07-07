@@ -130,7 +130,7 @@ export default function Undang() {
 
   function shareWa() {
     const text = encodeURIComponent(
-      `Yuk gabung ${group.typeLabel} "${group.name}" di Arisan Digital: ${fullLink}`
+      `Yuk gabung ${group.typeLabel} "${group.name}" di Hyro: ${fullLink}`
     );
     window.open(`https://wa.me/?text=${text}`, "_blank", "noopener,noreferrer");
   }

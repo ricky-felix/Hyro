@@ -149,7 +149,7 @@ export default function Profil() {
             </MenuSection>
 
             <div className="mt-1 pb-2 text-center text-[11px] font-medium text-ink-3">
-              Arisan Digital v1.0.0
+              Hyro v1.0.0
             </div>
           </div>
 

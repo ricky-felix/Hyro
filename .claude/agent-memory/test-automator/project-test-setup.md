@@ -1,6 +1,6 @@
 ---
 name: project-test-setup
-description: Frontend unit test infra — framework, runner, commands, and key patterns for Arisan Digital
+description: Frontend unit test infra — framework, runner, commands, and key patterns for Hyro
 metadata:
   type: project
 ---

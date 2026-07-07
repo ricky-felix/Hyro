@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// Supabase-backed data layer for the Arisan Digital MVP.
+// Supabase-backed data layer for the Hyro MVP.
 //
 // The browser talks to Supabase directly (no NestJS backend). The
 // current user is a real authenticated Supabase user (email/phone +

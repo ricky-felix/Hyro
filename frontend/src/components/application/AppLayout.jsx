@@ -37,9 +37,9 @@ export default function AppLayout({ children, title, hideTabbar = false }) {
       <aside className="hidden md:flex flex-col flex-shrink-0" style={{ width: 260, height: "100vh", position: "sticky", top: 0, background: "#fff", borderRight: "1px solid var(--line-soft)", padding: "20px 14px", overflowY: "auto" }}>
         {/* Brand */}
         <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "6px 8px 20px" }}>
-          <img src="/Arisan-Digital-Logo-icon.png" alt="Arisan Digital" style={{ width: 32, height: 32, objectFit: "contain" }} />
+          <img src="/Arisan-Digital-Logo-icon.png" alt="Hyro" style={{ width: 32, height: 32, objectFit: "contain" }} />
           <div>
-            <div style={{ fontWeight: 700, fontSize: 16, color: "var(--ink-1)" }}>Arisan Digital</div>
+            <div style={{ fontWeight: 700, fontSize: 16, color: "var(--ink-1)" }}>Hyro</div>
             <div style={{ color: "var(--ink-2)", fontSize: 11, fontWeight: 500 }}>Halo, {firstName}</div>
           </div>
         </div>

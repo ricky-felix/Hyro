@@ -1,1 +1,1 @@
-- [Product Context](product_context.md) — Arisan Digital vision, business model, tech stack, current MVP state, and known gaps
+- [Product Context](product_context.md) — Hyro vision, business model, tech stack, current MVP state, and known gaps

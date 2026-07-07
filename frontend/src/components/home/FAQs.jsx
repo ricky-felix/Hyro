@@ -6,10 +6,10 @@ import { Reveal } from "./Reveal";
 
 const FAQS = [
   {
-    q: "Apa itu Arisan Digital dan bagaimana cara kerjanya?",
+    q: "Apa itu Hyro dan bagaimana cara kerjanya?",
     a: (
       <>
-        Arisan Digital adalah WebApp untuk mengoordinasi <strong>arisan</strong>{" "}
+        Hyro adalah WebApp untuk mengoordinasi <strong>arisan</strong>{" "}
         (tabungan bergilir) dan <strong>patungan</strong> (bagi tagihan) bersama
         teman, keluarga, atau rekan. Kamu membuat grup atau tagihan, mengundang
         anggota lewat link, dan WebApp mencatat siapa yang sudah bayar,
@@ -47,7 +47,7 @@ const FAQS = [
     q: "Apakah WebApp menyimpan uang saya — dan apakah aman?",
     a: (
       <>
-        Tidak. Arisan Digital adalah{" "}
+        Tidak. Hyro adalah{" "}
         <strong>lapisan koordinasi &amp; kepercayaan</strong>, bukan dompet
         digital. Uangmu tidak pernah mampir di WebApp — pembayaran dilakukan
         langsung antar anggota lewat transfer bank atau e-wallet (GoPay, OVO,
@@ -96,7 +96,7 @@ const FAQS = [
     q: "Berapa biaya penggunaannya?",
     a: (
       <>
-        Arisan Digital gratis untuk mulai dan untuk kebutuhan sehari-hari. Karena
+        Hyro gratis untuk mulai dan untuk kebutuhan sehari-hari. Karena
         uang ditransfer langsung antar anggota, kami{" "}
         <strong>tidak pernah memotong komisi</strong> dari dana grupmu. Ke depan
         akan ada paket premium opsional untuk grup yang lebih besar dan butuh
@@ -125,7 +125,7 @@ export function FAQs() {
           <span className="kicker">Tanya Jawab</span>
           <h2 id="faq-heading">Pertanyaan umum</h2>
           <p>
-            Jawaban untuk pertanyaan umum tentang Arisan Digital dan cara
+            Jawaban untuk pertanyaan umum tentang Hyro dan cara
             kerjanya.
           </p>
         </div>

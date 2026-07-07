@@ -1,13 +1,13 @@
 ---
 name: product-context
-description: Arisan Digital product overview — target market, vision, core features, business model, and current state
+description: Hyro product overview — target market, vision, core features, business model, and current state
 metadata:
   type: project
 ---
 
 ## Product Vision
 
-**Arisan Digital** is a web app to digitize two Indonesian financial traditions for Gen Z:
+**Hyro** is a web app to digitize two Indonesian financial traditions for Gen Z:
 
 1. **Arisan** (rotating savings group) — members contribute fixed amounts on a schedule; take turns receiving the full pool
 2. **Patungan** (bill splitting) — split shared expenses across friends with 4 methods (equal/exact/percentage/shares)
@@ -52,7 +52,7 @@ Database: Supabase PostgreSQL with RLS + service-role auth backend. Service role
 - `SETUP-MVP.md` — MVP runs on anonymous Supabase auth, no login gate (members/participants stored as plain names)
 - Backend tests all passing
 
-**What's Built**: 
+**What's Built**:
 - Full arisan (group create, member invites, giliran scheduling, payment tracking, admin approval)
 - Full patungan (bill create, 4 split strategies, debt simplification algorithm, settlements)
 - Notifications, contacts, recurring bills, storage (signed URLs), billing webhooks, usage tracking, RBAC (platform + group-level)

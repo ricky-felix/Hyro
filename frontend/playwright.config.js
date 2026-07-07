@@ -2,7 +2,7 @@
 import { defineConfig, devices } from "playwright/test";
 
 /**
- * Playwright configuration for Arisan Digital frontend e2e tests.
+ * Playwright configuration for Hyro frontend e2e tests.
  *
  * The suite uses the DEV server (Vite) so that the /screens/* unguarded
  * routes are available. Auth-gated /app/* routes are reached by seeding

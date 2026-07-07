@@ -1,5 +1,5 @@
 /* =============================================================
-   app-v2.css — Arisan Digital v2 Screen Styles
+   app-v2.css — Hyro v2 Screen Styles
    All rules scoped under .v2-screen to avoid collisions with
    the existing app styles in src/index.css
    ============================================================= */
@@ -395,19 +395,19 @@
 
   /* Off-screen cards stay hidden; the active card is full-bleed */
 
-  
+
 
   /* Card content: a centered, readable column */
 
   /* Scale up card typography */
 
-  
 
-  
+
+
 
   /* Arrow buttons */
 
-  
+
 
   /* Hide swipe hint on desktop */
 
@@ -434,11 +434,11 @@
 
   /* Legend bar stays full-width; its inner content aligns to the 760px chat column. */
 
-  
+
 
   /* Chat thread: fill a 760px centered column so bubbles line up with the legend. */
 
-  
+
 
   /* Quick-reply chips: normal flow, centered to 1200px band (matches notif-header) */
 
@@ -456,7 +456,7 @@
 
   /* Desktop hover affordances */
 
-  
+
 
   /* ============================================================
      MEMBERS ORBIT — orbit left, roster right on full-bleed bg
@@ -479,13 +479,13 @@
   /* Right column: real container (override base display:contents) so summary +
      roster stack as one grid column and the two-column group stays centered */
 
-  
+
 
   /* Two-column member grid in the right column */
 
-  
 
-  
+
+
 
   /* Desktop row hover */
 

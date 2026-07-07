@@ -20,12 +20,12 @@ export default function NotFound() {
 
       <Link
         to="/"
-        aria-label="Arisan Digital — kembali ke beranda"
+        aria-label="Hyro — kembali ke beranda"
         className="mb-10 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
       >
         <img
           src="/Arisan-Digital-Full-Logo-no-bg.webp"
-          alt="Arisan Digital"
+          alt="Hyro"
           style={{ height: "120px", width: "auto" }}
         />
       </Link>

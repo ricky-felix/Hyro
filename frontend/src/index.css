@@ -644,7 +644,7 @@ a:active {
   }
 }
 
-/* ===== Arisan Digital App — aliases to Tailwind theme vars ===== */
+/* ===== Hyro App — aliases to Tailwind theme vars ===== */
 :root {
   /* Map design token names → Tailwind-generated CSS vars */
   --emerald:       var(--color-brand-primary);

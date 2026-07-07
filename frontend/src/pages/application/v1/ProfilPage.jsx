@@ -160,11 +160,11 @@ export function ProfilPage() {
         {/* About */}
         <div style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-3)", textTransform: "uppercase", letterSpacing: "0.07em", margin: "0 0 8px 4px" }}>Tentang</div>
         <SettingsGroup>
-          <SettingRow ico="globe" label="Buka Website" sub="Kunjungi halaman utama Arisan Digital" iconBg="var(--emerald-tint)" iconColor="var(--emerald-dark)" onClick={() => navigate("/")}>
+          <SettingRow ico="globe" label="Buka Website" sub="Kunjungi halaman utama Hyro" iconBg="var(--emerald-tint)" iconColor="var(--emerald-dark)" onClick={() => navigate("/")}>
             <Icon name="chevron-right" size={16} style={{ color: "var(--ink-3)" }} />
           </SettingRow>
           <Divider />
-          <SettingRow ico="info" label="Versi WebApp" sub="MVP · Arisan Digital" iconBg="var(--gray-soft)" iconColor="var(--ink-2)" />
+          <SettingRow ico="info" label="Versi WebApp" sub="MVP · Hyro" iconBg="var(--gray-soft)" iconColor="var(--ink-2)" />
           <Divider />
           <SettingRow ico="link" label="Syarat & Ketentuan" iconBg="var(--gray-soft)" iconColor="var(--ink-2)" onClick={() => {}}>
             <Icon name="chevron-right" size={16} style={{ color: "var(--ink-3)" }} />
@@ -176,7 +176,7 @@ export function ProfilPage() {
         </SettingsGroup>
 
         <div style={{ textAlign: "center", padding: "8px 0 20px", fontSize: 12, color: "var(--ink-3)" }}>
-          Arisan Digital · Dibuat untuk komunitas Indonesia 🇮🇩
+          Hyro · Dibuat untuk komunitas Indonesia 🇮🇩
         </div>
       </div>
     </AppLayout>

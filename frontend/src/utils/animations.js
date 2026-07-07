@@ -1,5 +1,5 @@
 /**
- * Animation utilities for Arisan Digital.
+ * Animation utilities for Hyro.
  * All variants use transform + opacity for GPU-composited performance.
  * Import `useReducedMotion` from framer-motion in components for reactive
  * reduced-motion support instead of the one-shot prefersReducedMotion helper.

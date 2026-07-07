@@ -1,13 +1,13 @@
 ---
 name: arisan-digital-context
-description: Core product context for Arisan Digital — Gen-Z Indonesian app for rotating-savings (arisan) & bill-splitting (patungan)
+description: Core product context for Hyro — Gen-Z Indonesian app for rotating-savings (arisan) & bill-splitting (patungan)
 metadata:
   type: project
 ---
 
-**Product**: Arisan Digital  
-**Target Users**: Gen-Z Indonesians (18–35) coordinating shared finances via rotating-savings groups and one-off bill splits.  
-**Current Status**: MVP launched; v2 redesigned UI (React + Vite + Tailwind v4 frontend); NestJS + Supabase backend.  
+**Product**: Hyro
+**Target Users**: Gen-Z Indonesians (18–35) coordinating shared finances via rotating-savings groups and one-off bill splits.
+**Current Status**: MVP launched; v2 redesigned UI (React + Vite + Tailwind v4 frontend); NestJS + Supabase backend.
 **Business Model**: No money held; members transfer peer-to-peer via bank/e-wallet; app is coordination + proof layer.
 
 ## Key Flows

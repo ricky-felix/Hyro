@@ -1,2 +1,2 @@
-- [Arisan Digital Project Context](project-arisan-digital.md) — money flow model, data collected, regulatory positioning, current stage
+- [Hyro Project Context](project-arisan-digital.md) — money flow model, data collected, regulatory positioning, current stage
 - [Founder Profile](user-founder-profile.md) — Ricky Felix, technical founder, Indonesia-focused, practical guidance preferred

@@ -13,7 +13,7 @@ test.describe("Landing Page", () => {
   });
 
   test("renders the page without crashing", async ({ page }) => {
-    await expect(page).toHaveTitle(/arisan digital/i);
+    await expect(page).toHaveTitle(/Hyro/i);
   });
 
   test("shows the hero section with a CTA button", async ({ page }) => {
@@ -30,8 +30,8 @@ test.describe("Landing Page", () => {
   test("navbar is visible and contains the brand logo", async ({ page }) => {
     const nav = page.getByRole("navigation");
     await expect(nav).toBeVisible();
-    // The navbar contains the brand logo image (alt text includes "Arisan Digital")
-    await expect(nav.getByAltText(/arisan digital/i)).toBeVisible();
+    // The navbar contains the brand logo image (alt text includes "Hyro")
+    await expect(nav.getByAltText(/Hyro/i)).toBeVisible();
   });
 
   test("shows the FAQ section", async ({ page }) => {

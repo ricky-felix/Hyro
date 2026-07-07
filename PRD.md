@@ -1,4 +1,4 @@
-# PRD — Arisan Digital
+# PRD — Hyro
 
 **Status:** MVP · **Versi:** 1.0 · **Tanggal:** 15 Juni 2026 · **Owner:** Titik Jalin Projects
 
@@ -6,7 +6,7 @@
 
 ## 1. Ringkasan
 
-Arisan Digital adalah WebApp untuk mendigitalisasi sistem **arisan** tradisional Indonesia, plus **patungan** (bill splitting) bareng teman. Dirancang untuk pengguna Gen Z dengan format lokal penuh (Rupiah, nomor HP, tanggal, Bahasa Indonesia).
+Hyro adalah WebApp untuk mendigitalisasi sistem **arisan** tradisional Indonesia, plus **patungan** (bill splitting) bareng teman. Dirancang untuk pengguna Gen Z dengan format lokal penuh (Rupiah, nomor HP, tanggal, Bahasa Indonesia).
 
 ## 2. Masalah
 

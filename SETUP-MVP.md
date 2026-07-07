@@ -1,4 +1,4 @@
-# Arisan Digital — MVP setup (no login, Supabase-backed)
+# Hyro — MVP setup (no login, Supabase-backed)
 
 This MVP runs **without a login/registration screen**. Each visitor gets an
 anonymous Supabase session automatically, and all data (arisan groups,

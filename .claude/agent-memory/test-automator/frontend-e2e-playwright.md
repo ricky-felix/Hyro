@@ -1,6 +1,6 @@
 ---
 name: frontend-e2e-playwright
-description: Playwright e2e suite for Arisan Digital frontend — auth strategy, selector pitfalls, and gotoApp() pattern
+description: Playwright e2e suite for Hyro frontend — auth strategy, selector pitfalls, and gotoApp() pattern
 metadata:
   type: project
 ---

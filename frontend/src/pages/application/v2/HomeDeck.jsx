@@ -161,7 +161,7 @@ export default function HomeDeck({ cards: cardsProp }) {
   // mobile) — mirrors the card gradient so settled/urgent/type stay consistent.
   // With no cards (empty filter / no tagihan) there's no domain to mirror, so
   // fall back to the emerald→lavender brand gradient (the "no single domain /
-  // Arisan Digital itself" mark, same as the compose-pill icon).
+  // Hyro itself" mark, same as the compose-pill icon).
   const activeCard = visibleCards[safeIdx];
   const bgCardColor = visibleCards.length === 0
     ? "linear-gradient(165deg, #059669 0%, #10b981 45%, #a78bfa 100%)" // profile-banner gradient

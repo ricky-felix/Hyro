@@ -1,4 +1,4 @@
-# Arisan Digital — MVP Completion Punch-List
+# Hyro — MVP Completion Punch-List
 
 > Status as of 2026-06-08. Audited against `frontend/src/pages` + `backend/src/*` controllers.
 > Backend is feature-complete and tested; the gaps below are **frontend pages, upload flows, the CRON layer, real auth, and the frontend↔backend integration**.

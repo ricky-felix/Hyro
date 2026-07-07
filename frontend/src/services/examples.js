@@ -2,7 +2,7 @@
  * Usage Examples for API Services
  *
  * This file contains practical examples of how to use the API services
- * in various scenarios within the Arisan Digital application.
+ * in various scenarios within the Hyro application.
  */
 
 import {

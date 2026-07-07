@@ -227,7 +227,7 @@ The QRIS tab is accessible in the form but the upload zone is overlaid with a fr
 
 The QRIS tab button itself carries a "Segera" micro-badge (7px, `--ink-3` bg) positioned `absolute; top: -4px; right: 2px`.
 
-The form still allows saving a QRIS method with just a label (no image). The info copy explicitly states: "Hanya gambar yang kamu upload sendiri yang ditampilkan. Arisan Digital tidak membuat atau memproses QRIS." — this is the regulatory guardrail copy for the QRIS field.
+The form still allows saving a QRIS method with just a label (no image). The info copy explicitly states: "Hanya gambar yang kamu upload sendiri yang ditampilkan. Hyro tidak membuat atau memproses QRIS." — this is the regulatory guardrail copy for the QRIS field.
 
 When Phase 4 ships: remove `.soon-overlay::after` pseudo-element and the "Segera" micro-badge. The upload zone and preview states are already designed (`qris-zone`, `qris-preview`, `qris-change-btn` classes in the prototype).
 
@@ -379,13 +379,13 @@ The e-wallet icon is already in `icons.jsx` as part of the existing phone/device
 The following copy strings must be present and exact:
 
 **Info note (own view — MetodePembayaran page):**
-> "Arisan Digital tidak menyimpan atau memproses uangmu. Detail ini dipakai semata agar anggota grup bisa mentransfer langsung ke rekeningmu — tidak melalui aplikasi."
+> "Hyro tidak menyimpan atau memproses uangmu. Detail ini dipakai semata agar anggota grup bisa mentransfer langsung ke rekeningmu — tidak melalui aplikasi."
 
 **Privacy note (peer view — PaymentMethodSelector sheet):**
 > "Nomor rekening ditampilkan sebagian (4 digit terakhir) demi privasi. Detail lengkap hanya terlihat oleh pemilik."
 
 **QRIS upload hint (form):**
-> "Hanya gambar yang kamu upload sendiri yang ditampilkan. Arisan Digital tidak membuat atau memproses QRIS."
+> "Hanya gambar yang kamu upload sendiri yang ditampilkan. Hyro tidak membuat atau memproses QRIS."
 
 **Delete confirm copy:**
 > "Hapus metode pembayaran ini? Anggota grup tidak bisa membayar ke rekening ini lagi."

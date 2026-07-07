@@ -1,11 +1,11 @@
 ---
 name: project-db-schema
-description: Arisan Digital database schema summary — tables, migrations, test harness location
+description: Hyro database schema summary — tables, migrations, test harness location
 metadata:
   type: project
 ---
 
-Arisan Digital uses Supabase (hosted Postgres). Schema is defined in raw SQL files under `supabase/`. No ORM migrations — plain SQL applied via Supabase Dashboard SQL Editor.
+Hyro uses Supabase (hosted Postgres). Schema is defined in raw SQL files under `supabase/`. No ORM migrations — plain SQL applied via Supabase Dashboard SQL Editor.
 
 **Why:** Useful for future test additions or schema change reviews.
 **How to apply:** Knowing these paths and migration order prevents re-reading everything.

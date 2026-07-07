@@ -1,4 +1,4 @@
-# Arisan Digital Backend (Python / FastAPI)
+# Hyro Backend (Python / FastAPI)
 
 FastAPI port of the original NestJS backend. Uses Supabase (service-role) as the
 data layer, Pydantic for request validation, and APScheduler for the daily cron

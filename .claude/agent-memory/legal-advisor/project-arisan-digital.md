@@ -1,11 +1,11 @@
 ---
 name: project-arisan-digital
-description: Core product facts for Arisan Digital — what it does, money flow model, and regulatory positioning
+description: Core product facts for Hyro — what it does, money flow model, and regulatory positioning
 metadata:
   type: project
 ---
 
-Arisan Digital is an Indonesian fintech-adjacent web app (React/Vite + NestJS + Supabase) targeting Gen Z users. It has two core features:
+Hyro is an Indonesian fintech-adjacent web app (React/Vite + NestJS + Supabase) targeting Gen Z users. It has two core features:
 1. **Arisan** — digital coordination of rotating savings groups (giliran/round management, iuran tracking)
 2. **Patungan** — peer-to-peer bill splitting with 4 split strategies + debt simplification
 

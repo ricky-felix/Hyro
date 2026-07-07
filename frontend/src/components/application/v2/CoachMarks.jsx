@@ -51,7 +51,7 @@ const STEPS = [
   {
     key: "done",
     title: "Selamat mencoba!",
-    body: "Ada pertanyaan atau butuh bantuan? Hubungi kami lewat email di bawah, atau cari Arisan Digital di halaman Profil.",
+    body: "Ada pertanyaan atau butuh bantuan? Hubungi kami lewat email di bawah, atau cari Hyro di halaman Profil.",
     targets: [],
     tipSide: "center",
     email: "arisandigital@outlook.com",

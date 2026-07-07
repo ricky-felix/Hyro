@@ -269,7 +269,7 @@ export default function KeamananPin() {
           </div>
 
           <p className="mt-4 text-center text-[11px] font-medium leading-relaxed text-ink-3">
-            PIN disimpan secara aman di server. Tim Arisan Digital tidak pernah meminta PIN-mu.
+            PIN disimpan secara aman di server. Tim Hyro tidak pernah meminta PIN-mu.
           </p>
         </div>
 

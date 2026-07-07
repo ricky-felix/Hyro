@@ -13,7 +13,7 @@ export default function SyaratKetentuan() {
       lastUpdated="15 Juni 2026"
       intro={
         <>
-          Selamat datang di Arisan Digital. Dengan mengakses atau menggunakan
+          Selamat datang di Hyro. Dengan mengakses atau menggunakan
           aplikasi dan layanan kami, Anda menyetujui Syarat & Ketentuan berikut.
           Mohon dibaca dengan saksama. Jika Anda tidak setuju, mohon untuk tidak
           menggunakan layanan kami.
@@ -23,7 +23,7 @@ export default function SyaratKetentuan() {
       <Section heading="1. Penerimaan Syarat">
         <p>
           Syarat & Ketentuan ini merupakan perjanjian yang mengikat antara Anda
-          ("Pengguna") dan Arisan Digital ("kami"). Dengan membuat akun atau
+          ("Pengguna") dan Hyro ("kami"). Dengan membuat akun atau
           menggunakan layanan, Anda menyatakan telah membaca, memahami, dan
           menyetujui seluruh ketentuan di halaman ini serta{" "}
           <Link
@@ -40,7 +40,7 @@ export default function SyaratKetentuan() {
         <List
           items={[
             <>
-              <strong>Layanan</strong> — aplikasi Arisan Digital beserta seluruh
+              <strong>Layanan</strong> — aplikasi Hyro beserta seluruh
               fitur di dalamnya.
             </>,
             <>
@@ -72,13 +72,13 @@ export default function SyaratKetentuan() {
 
       <Section heading="4. Tentang Layanan">
         <p>
-          Arisan Digital adalah platform teknologi yang membantu Anda mengelola
+          Hyro adalah platform teknologi yang membantu Anda mengelola
           arisan dan patungan secara transparan: mencatat anggota, iuran,
           jadwal, giliran, dan bukti pembayaran. Kami menyediakan alat bantu
           pencatatan dan koordinasi.
         </p>
         <p>
-          <strong>Penting:</strong> Arisan Digital bukan bank, bukan lembaga
+          <strong>Penting:</strong> Hyro bukan bank, bukan lembaga
           keuangan, dan bukan penyelenggara jasa pembayaran. Kami tidak
           menyimpan, menahan, atau menyalurkan dana antar Pengguna. Seluruh
           transfer dana terjadi langsung antar Pengguna melalui rekening atau
@@ -101,7 +101,7 @@ export default function SyaratKetentuan() {
       <Section heading="6. Pembayaran & Transaksi">
         <List
           items={[
-            "Seluruh kesepakatan nominal iuran, jadwal, dan giliran ditentukan oleh anggota grup, bukan oleh Arisan Digital.",
+            "Seluruh kesepakatan nominal iuran, jadwal, dan giliran ditentukan oleh anggota grup, bukan oleh Hyro.",
             "Kami tidak menjamin kelancaran pembayaran atau itikad baik anggota lain dalam suatu grup.",
             "Perselisihan terkait dana antar anggota diselesaikan secara langsung antar pihak yang bersangkutan.",
             "Apabila ada biaya layanan tertentu di masa depan, biaya tersebut akan diinformasikan secara jelas sebelum Anda menyetujuinya.",
@@ -133,7 +133,7 @@ export default function SyaratKetentuan() {
 
       <Section heading="9. Hak Kekayaan Intelektual">
         <p>
-          Seluruh merek, logo, desain, dan perangkat lunak Arisan Digital adalah
+          Seluruh merek, logo, desain, dan perangkat lunak Hyro adalah
           milik kami dan dilindungi hukum. Anda tidak diperbolehkan menyalin,
           memodifikasi, atau mendistribusikannya tanpa izin tertulis dari kami.
         </p>
@@ -142,7 +142,7 @@ export default function SyaratKetentuan() {
       <Section heading="10. Penafian & Batasan Tanggung Jawab">
         <p>
           Layanan disediakan "sebagaimana adanya" tanpa jaminan apa pun. Sejauh
-          diizinkan oleh hukum, Arisan Digital tidak bertanggung jawab atas
+          diizinkan oleh hukum, Hyro tidak bertanggung jawab atas
           kerugian yang timbul dari: gagal bayar anggota lain, perselisihan
           antar anggota, kesalahan input data oleh Pengguna, atau gangguan
           layanan di luar kendali wajar kami.

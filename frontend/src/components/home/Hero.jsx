@@ -76,7 +76,7 @@ export function Hero() {
             onClick={() => setZoomed(true)}
             aria-label={`Perbesar ${HERO_SHOT.title}`}
           >
-            <img src={HERO_SHOT.src} alt="Tampilan beranda Arisan Digital" />
+            <img src={HERO_SHOT.src} alt="Tampilan beranda Hyro" />
           </button>
           <div className="float f1">
             <div className="ft">Iuran berikutnya</div>

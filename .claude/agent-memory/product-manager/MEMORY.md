@@ -1,1 +1,1 @@
-- [Arisan Digital Context](arisan-digital-context.md) — product vision, stack, design system, current payment methods gap
+- [Hyro Context](arisan-digital-context.md) — product vision, stack, design system, current payment methods gap

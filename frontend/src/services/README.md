@@ -1,6 +1,6 @@
 # API Services Documentation
 
-This directory contains all API service modules for the Arisan Digital frontend application. These services provide a clean, type-safe interface for communicating with the backend API.
+This directory contains all API service modules for the Hyro frontend application. These services provide a clean, type-safe interface for communicating with the backend API.
 
 ## Architecture Overview
 

@@ -41,7 +41,7 @@ export default function BuktiTransfer() {
 
   // Reference number — randomly generated per receipt. Lazy-initialized so it
   // stays stable across re-renders. Prefix encodes the product domain:
-  // ADA = Arisan Digital Arisan, ADP = Arisan Digital Patungan.
+  // ADA = Hyro Arisan, ADP = Hyro Patungan.
   const [refNo] = useState(
     () => `TRX-${isArisan ? "ADA" : "ADP"}-${crypto.randomUUID().split("-")[0].toUpperCase()}`,
   );

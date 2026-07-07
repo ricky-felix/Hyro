@@ -310,7 +310,7 @@ export default function MetodePembayaran() {
           {/* ── Compliance info note (kept from v0; PRD §⚖️) ── */}
           <div className="mt-8 rounded-[14px] bg-brand-secondary-soft/50 px-4 py-3.5">
             <p className="text-[12px] font-semibold leading-relaxed text-brand-secondary-dark">
-              Arisan Digital tidak menyimpan uangmu. Metode pembayaran dipakai hanya untuk memudahkan konfirmasi antar anggota grup — transfernya tetap langsung antarmu dan anggota lain.
+              Hyro tidak menyimpan uangmu. Metode pembayaran dipakai hanya untuk memudahkan konfirmasi antar anggota grup — transfernya tetap langsung antarmu dan anggota lain.
             </p>
           </div>
 

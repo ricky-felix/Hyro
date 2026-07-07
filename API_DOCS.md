@@ -1,4 +1,4 @@
-# Arisan Digital API Documentation
+# Hyro API Documentation
 
 **Version:** 1.0.0
 **Base URL:** `http://localhost:3000/api`

@@ -53,7 +53,7 @@ async def lifespan(_app: FastAPI):
     shutdown_scheduler()
 
 
-app = FastAPI(title="Arisan Digital Backend API", lifespan=lifespan)
+app = FastAPI(title="Hyro Backend API", lifespan=lifespan)
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(_request: Request, exc: RequestValidationError):

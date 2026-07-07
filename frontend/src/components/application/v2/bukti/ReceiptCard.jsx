@@ -72,13 +72,13 @@ export default function ReceiptCard({
           <div className="grid h-8 w-8 shrink-0 place-items-center overflow-hidden rounded-[9px] border-[1.5px] border-white/35 bg-white p-1">
             <img
               src="/Arisan-Digital-Logo-icon.png"
-              alt="Arisan Digital"
+              alt="Hyro"
               className="h-full w-full object-contain"
             />
           </div>
           <div>
             {/* bukti-wordmark: text-[14px] font-extrabold text-white tracking-[-0.01em] */}
-            <div className="text-[14px] font-extrabold tracking-[-0.01em] text-white">Arisan Digital</div>
+            <div className="text-[14px] font-extrabold tracking-[-0.01em] text-white">Hyro</div>
             {/* bukti-wordmark-sub: text-[9px] font-semibold text-white/65 tracking-[0.04em] uppercase */}
             <div className="text-[9px] font-semibold uppercase tracking-[0.04em] text-white/65">WebApp Arisan & Tagihan Modern, Transparan & Aman</div>
           </div>
@@ -224,12 +224,12 @@ export default function ReceiptCard({
         {/* bukti-footer-logo: w-4 h-4 brand mark */}
         <img
           src="/Arisan-Digital-Logo-icon.png"
-          alt="Arisan Digital"
+          alt="Hyro"
           className="h-4 w-4 object-contain"
         />
         {/* bukti-footer-text: text-[10px] text-ink-3 font-semibold tracking-[0.01em] */}
         <span className="text-[10px] font-semibold tracking-[0.01em] text-ink-3">
-          Dibuat dengan Arisan Digital
+          Dibuat dengan Hyro
         </span>
       </div>
 
