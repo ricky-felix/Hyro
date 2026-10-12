@@ -17,7 +17,7 @@ const PRODUCTS = [
   },
   {
     variant: "patungan",
-    tag: "PATUNGAN · BARU",
+    tag: "PATUNGAN",
     title: "Bagi tagihan tanpa hitung manual",
     desc: "Patungan makan, liburan, atau hadiah. Masukkan total sekali, terbagi rata otomatis ke semua peserta.",
     points: [

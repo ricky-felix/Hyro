@@ -23,15 +23,17 @@ const PILLARS = [
 
 export function TentangHyro() {
   return (
-    <section className="block" id="Hyro" aria-labelledby="Hyro-heading">
+    <section className="block" id="tentang" aria-labelledby="tentang-heading">
       <Reveal className="wrap">
         <div className="sec-head reveal-up">
           <span className="kicker">Kenalan dulu</span>
-          <h2 id="Hyro-heading">
+          <h2 id="tentang-heading">
             Apa itu <span className="dg-name">Hyro</span>?
           </h2>
           <p>
-            Hyro reads as <strong>Hero</strong> in English. The infrastructure platform that turns informal savings groups (arisan) into automated, trust-enabled financial infrastructure. Simply evokes speed, flow, technology
+            <strong>Hyro</strong> (dibaca &ldquo;Hero&rdquo;) membantu arisan dan
+            patungan berjalan otomatis dan bisa dipercaya — semua iuran,
+            giliran, dan bukti transfer tercatat rapi di satu tempat.
           </p>
         </div>
         <div className="dg-pillars">

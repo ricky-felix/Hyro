@@ -63,8 +63,7 @@ export function Hero() {
               <span>+</span>
             </div>
             <div>
-              <span className="stars">★★★★★</span> &nbsp;Dipakai teman, keluarga,
-              komunitas &amp; bisnis
+              Untuk teman, keluarga, komunitas &amp; bisnis
             </div>
           </div>
         </div>

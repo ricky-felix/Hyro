@@ -136,7 +136,7 @@ export default function RekeningPayout() {
             <p className="text-[12px] font-semibold leading-relaxed text-brand-primary-hover">
               {hasExisting
                 ? "Rekening tersimpan — kamu bisa memperbarui atau menghapusnya di bawah."
-                : "Rekening ini dipakai sebagai tujuan penerimaan dana giliran arisan."}
+                : "Rekening ini jadi tujuan transfer anggota saat kamu menerima giliran arisan."}
             </p>
           </div>
 
@@ -256,7 +256,7 @@ export default function RekeningPayout() {
           )}
 
           <p className="mt-5 text-center text-[11px] font-medium leading-relaxed text-ink-3">
-            Data rekening disimpan secara terenkripsi dan hanya digunakan untuk mengirimkan dana giliran arisanmu.
+            Data rekening disimpan secara terenkripsi dan hanya ditampilkan ke anggota grupmu sebagai tujuan transfer. Hyro tidak menyimpan atau menyalurkan dana.
           </p>
 
         </div>

@@ -6,7 +6,7 @@ import { handleAnchorClick } from "../../utils/smoothScroll";
 import { routes } from "../../config";
 
 const NAV_LINKS = [
-  { id: "Hyro", label: "Hyro" },
+  { id: "tentang", label: "Tentang" },
   { id: "siapa", label: "Untuk Siapa" },
   { id: "cara", label: "Cara Kerja" },
   { id: "produk", label: "Produk" },

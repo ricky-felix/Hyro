@@ -15,7 +15,7 @@ const FAQS = [
         anggota lewat link, dan WebApp mencatat siapa yang sudah bayar,
         menghitung giliran, serta mengirim pengingat otomatis — menggantikan grup
         WhatsApp dan catatan manual yang berantakan. Berbasis web, jadi tidak
-        perlu unduh WebApp atau daftar akun untuk mulai.
+        perlu unduh aplikasi — cukup buat akun dan langsung mulai.
       </>
     ),
   },
@@ -37,9 +37,9 @@ const FAQS = [
     a: (
       <>
         Buat grup arisan atau tagihan patungan, atur nominal iuran/total, lalu
-        bagikan <strong>link undangan</strong> atau QR ke anggotamu. Mereka cukup
-        membuka link, memasukkan nama, dan langsung bergabung — tanpa perlu
-        mendaftar akun. Grup siap berjalan dalam hitungan menit.
+        bagikan <strong>link undangan</strong> ke anggotamu. Mereka cukup
+        membuka link, masuk atau buat akun, lalu langsung bergabung. Grup siap
+        berjalan dalam hitungan menit.
       </>
     ),
   },
@@ -52,8 +52,8 @@ const FAQS = [
         digital. Uangmu tidak pernah mampir di WebApp — pembayaran dilakukan
         langsung antar anggota lewat transfer bank atau e-wallet (GoPay, OVO,
         DANA, dan lainnya). Kami hanya mencatat, mengingatkan, dan menjaga
-        transparansi. Data dan catatan pembayaran dienkripsi dan tidak bisa
-        diubah setelah dikonfirmasi.
+        transparansi. Data dikirim lewat koneksi terenkripsi dan catatan grup
+        hanya bisa dilihat oleh anggotanya.
       </>
     ),
   },

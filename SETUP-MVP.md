@@ -55,12 +55,13 @@ You start with an empty dashboard and can create your first arisan or patungan.
 
 ```
 SUPABASE_URL=...            # your project URL
-SUPABASE_PUBLISHABLE_KEY=...# anon/publishable key (safe for the browser)
+SUPABASE_PUBLISHABLE_KEY=...# publishable key (sb_publishable_…) — never the secret key
 ```
 
-> ⚠️ Do **not** reference `VITE_SUPABASE_SECRET_KEY` in frontend code — anything
-> with a `VITE_` prefix is bundled into the client. The service key must stay
-> server-side only.
+> ⚠️ Only `VITE_*` plus the exact names listed in `ENV_PREFIX` in
+> `frontend/vite.config.js` (`SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`,
+> `GATE_PASSWORD_REAL`) are bundled into the client. Never add the secret /
+> service-role key there or give it a `VITE_` name — it must stay server-side.
 
 ## What's implemented
 

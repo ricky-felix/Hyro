@@ -17,7 +17,7 @@ const STEPS = [
   {
     color: "var(--gold)",
     title: "Kelola giliran transparan",
-    desc: "Undian fair menentukan giliran. Sistem ingatkan setiap anggota otomatis.",
+    desc: "Pilih undian acak atau urutan yang disepakati. Ingatkan anggota yang belum bayar dengan satu ketukan.",
   },
 ];
 

@@ -9,7 +9,7 @@ const FEATURES = [
     label: "Notifikasi Otomatis",
     title: "Pengingat & update real-time",
     tags: [{ cls: "em", text: "real-time" }],
-    desc: "Sistem kirim notifikasi jadwal iuran, giliran penerima, dan pengumuman penting langsung ke HP semua anggota.",
+    desc: "Jadwal iuran, giliran penerima, dan pembayaran masuk tampil di Notifikasi. Ingatkan anggota yang belum bayar cukup dengan satu ketukan.",
   },
   {
     idx: "02",
@@ -26,22 +26,38 @@ const FEATURES = [
     label: "Pengelolaan Giliran",
     title: "Undian fair & transparan",
     tags: [{ cls: "gd", text: "fair" }],
-    desc: "Undian transparan menentukan giliran, atau atur manual sesuai kesepakatan grup. Jadwal jelas untuk semua.",
+    desc: "Pilih undian acak yang transparan, atau urutan giliran sesuai kesepakatan grup. Jadwal jelas untuk semua.",
   },
   {
     idx: "04",
-    label: "Chat Group",
-    title: "Komunikasi dalam satu webapp",
-    tags: [{ cls: "lv", text: "fokus" }],
-    desc: "Obrolan khusus arisan, jadi chat WhatsApp grup nggak berantakan sama urusan arisan.",
+    label: "Bukti Transfer",
+    title: "Struk digital yang rapi",
+    tags: [
+      { cls: "em", text: "arisan" },
+      { cls: "lv", text: "patungan" },
+    ],
+    desc: "Setiap pembayaran punya struk digital berisi pengirim, penerima, jumlah, dan status — siap dibagikan ke grup atau disimpan sebagai gambar.",
   },
-
   {
     idx: "05",
-    label: "Keamanan Data",
-    title: "Privasi & proteksi terjamin",
-    tags: [{ cls: "em", text: "enkripsi" }],
-    desc: "Data dienkripsi dan hanya anggota grup yang bisa akses. Arisan dengan tenang tanpa khawatir bocor.",
+    label: "Dompet & Riwayat",
+    title: "Rangkuman keuanganmu",
+    tags: [{ cls: "gd", text: "ringkas" }],
+    desc: "Lihat total iuran, tagihan patungan, dan riwayat transaksi dari semua grupmu di satu tempat.",
+  },
+  {
+    idx: "06",
+    label: "Mode Offline",
+    title: "Tetap jalan tanpa sinyal",
+    tags: [{ cls: "lv", text: "offline" }],
+    desc: "Catat pembayaran meski koneksi putus. Begitu online lagi, semua data tersinkron otomatis.",
+  },
+  {
+    idx: "07",
+    label: "Keamanan Akun",
+    title: "PIN & akses khusus anggota",
+    tags: [{ cls: "em", text: "PIN" }],
+    desc: "Lindungi akunmu dengan PIN 6 digit. Data grup hanya bisa dilihat oleh anggota grup itu sendiri.",
   },
 ];
 
@@ -52,7 +68,7 @@ export function Features() {
         <div className="sec-head left reveal-left">
           <span className="kicker">Fitur</span>
           <h2 id="features-heading">Semua yang bikin arisan jalan mulus</h2>
-          <p>Enam hal inti yang dirancang supaya tiap ronde berjalan tanpa drama.</p>
+          <p>Tujuh hal inti yang dirancang supaya tiap ronde berjalan tanpa drama.</p>
         </div>
         <div className="rows">
           {FEATURES.map((f, i) => (
