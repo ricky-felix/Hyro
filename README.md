@@ -105,7 +105,7 @@ MIDTRANS_SERVER_KEY=...
 **`frontend/.env`**:
 
 ```env
-VITE_SUPABASE_URL=https://xxx.supabase.co
+SUPABASE_URL=https://xxx.supabase.co
 VITE_SUPABASE_ANON_KEY=eyJ...
 VITE_API_URL=http://localhost:3000/api
 ```

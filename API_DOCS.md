@@ -43,11 +43,11 @@ Content-Type: application/json
 
 ### Roles
 
-| Role | Description |
-|------|-------------|
-| `user` | Standard authenticated user |
+| Role          | Description                              |
+| ------------- | ---------------------------------------- |
+| `user`        | Standard authenticated user              |
 | `group_admin` | Administrator of a specific arisan group |
-| `super_admin` | Platform-wide administrator |
+| `super_admin` | Platform-wide administrator              |
 
 ---
 
@@ -60,15 +60,16 @@ GET /api/users/me
 ```
 
 **Response:**
+
 ```json
 {
-  "id": "uuid",
-  "email": "user@example.com",
-  "full_name": "Sari Wulandari",
-  "phone": "+62812345678",
-  "avatar_url": "https://...",
-  "platform_role": "user",
-  "created_at": "2024-01-01T00:00:00Z"
+	"id": "uuid",
+	"email": "user@example.com",
+	"full_name": "Sari Wulandari",
+	"phone": "+62812345678",
+	"avatar_url": "https://...",
+	"platform_role": "user",
+	"created_at": "2024-01-01T00:00:00Z"
 }
 ```
 
@@ -79,11 +80,12 @@ PATCH /api/users/me
 ```
 
 **Request Body:**
+
 ```json
 {
-  "full_name": "New Name",
-  "phone": "+62812345678",
-  "avatar_url": "https://..."
+	"full_name": "New Name",
+	"phone": "+62812345678",
+	"avatar_url": "https://..."
 }
 ```
 
@@ -106,20 +108,21 @@ GET /api/groups
 ```
 
 **Response:**
+
 ```json
 [
-  {
-    "id": "uuid",
-    "name": "Arisan Kantor Lt. 3",
-    "description": "Monthly office arisan",
-    "contribution_amount": 500000,
-    "frequency": "monthly",
-    "max_members": 12,
-    "current_round": 8,
-    "status": "active",
-    "created_by": "uuid",
-    "created_at": "2024-01-01T00:00:00Z"
-  }
+	{
+		"id": "uuid",
+		"name": "Arisan Kantor Lt. 3",
+		"description": "Monthly office arisan",
+		"contribution_amount": 500000,
+		"frequency": "monthly",
+		"max_members": 12,
+		"current_round": 8,
+		"status": "active",
+		"created_by": "uuid",
+		"created_at": "2024-01-01T00:00:00Z"
+	}
 ]
 ```
 
@@ -136,13 +139,14 @@ POST /api/groups
 ```
 
 **Request Body:**
+
 ```json
 {
-  "name": "Arisan Kantor",
-  "description": "Monthly office arisan",
-  "contribution_amount": 500000,
-  "frequency": "monthly",
-  "max_members": 12
+	"name": "Arisan Kantor",
+	"description": "Monthly office arisan",
+	"contribution_amount": 500000,
+	"frequency": "monthly",
+	"max_members": 12
 }
 ```
 
@@ -155,11 +159,12 @@ PATCH /api/groups/:id
 ```
 
 **Request Body:**
+
 ```json
 {
-  "name": "Updated Name",
-  "description": "Updated description",
-  "contribution_amount": 600000
+	"name": "Updated Name",
+	"description": "Updated description",
+	"contribution_amount": 600000
 }
 ```
 
@@ -182,20 +187,21 @@ GET /api/groups/:groupId/members
 ```
 
 **Response:**
+
 ```json
 [
-  {
-    "id": "uuid",
-    "user_id": "uuid",
-    "group_id": "uuid",
-    "role": "admin",
-    "giliran_order": 1,
-    "joined_at": "2024-01-01T00:00:00Z",
-    "user": {
-      "full_name": "Sari Wulandari",
-      "avatar_url": "https://..."
-    }
-  }
+	{
+		"id": "uuid",
+		"user_id": "uuid",
+		"group_id": "uuid",
+		"role": "admin",
+		"giliran_order": 1,
+		"joined_at": "2024-01-01T00:00:00Z",
+		"user": {
+			"full_name": "Sari Wulandari",
+			"avatar_url": "https://..."
+		}
+	}
 ]
 ```
 
@@ -206,9 +212,10 @@ POST /api/groups/:groupId/members
 ```
 
 **Request Body:**
+
 ```json
 {
-  "user_id": "uuid"
+	"user_id": "uuid"
 }
 ```
 
@@ -225,12 +232,13 @@ POST /api/groups/:groupId/members/assign-giliran
 ```
 
 **Request Body:**
+
 ```json
 {
-  "assignments": [
-    { "user_id": "uuid", "giliran_order": 1 },
-    { "user_id": "uuid", "giliran_order": 2 }
-  ]
+	"assignments": [
+		{ "user_id": "uuid", "giliran_order": 1 },
+		{ "user_id": "uuid", "giliran_order": 2 }
+	]
 }
 ```
 
@@ -251,17 +259,18 @@ GET /api/groups/:groupId/rounds
 ```
 
 **Response:**
+
 ```json
 [
-  {
-    "id": "uuid",
-    "group_id": "uuid",
-    "round_number": 8,
-    "recipient_id": "uuid",
-    "status": "active",
-    "scheduled_date": "2024-05-25",
-    "completed_at": null
-  }
+	{
+		"id": "uuid",
+		"group_id": "uuid",
+		"round_number": 8,
+		"recipient_id": "uuid",
+		"status": "active",
+		"scheduled_date": "2024-05-25",
+		"completed_at": null
+	}
 ]
 ```
 
@@ -278,9 +287,10 @@ PATCH /api/rounds/:id/recipient
 ```
 
 **Request Body:**
+
 ```json
 {
-  "recipient_id": "uuid"
+	"recipient_id": "uuid"
 }
 ```
 
@@ -327,12 +337,13 @@ POST /api/payments
 ```
 
 **Request Body:**
+
 ```json
 {
-  "round_id": "uuid",
-  "amount": 500000,
-  "proof_url": "https://storage.../proof.jpg",
-  "notes": "Transfer BCA"
+	"round_id": "uuid",
+	"amount": 500000,
+	"proof_url": "https://storage.../proof.jpg",
+	"notes": "Transfer BCA"
 }
 ```
 
@@ -349,9 +360,10 @@ PATCH /api/payments/:id/reject
 ```
 
 **Request Body:**
+
 ```json
 {
-  "reason": "Nominal tidak sesuai"
+	"reason": "Nominal tidak sesuai"
 }
 ```
 
@@ -368,28 +380,29 @@ GET /api/bills
 ```
 
 **Response:**
+
 ```json
 {
-  "as_payer": [
-    {
-      "id": "uuid",
-      "title": "Makan malam Restoran Padang",
-      "category": "makanan",
-      "total_amount": 480000,
-      "split_method": "equal",
-      "status": "open",
-      "created_by": "uuid",
-      "created_at": "2024-05-14T10:00:00Z"
-    }
-  ],
-  "as_participant": [
-    {
-      "id": "uuid",
-      "title": "Kopi pagi tim ops",
-      "my_share": 36000,
-      "my_status": "pending"
-    }
-  ]
+	"as_payer": [
+		{
+			"id": "uuid",
+			"title": "Makan malam Restoran Padang",
+			"category": "makanan",
+			"total_amount": 480000,
+			"split_method": "equal",
+			"status": "open",
+			"created_by": "uuid",
+			"created_at": "2024-05-14T10:00:00Z"
+		}
+	],
+	"as_participant": [
+		{
+			"id": "uuid",
+			"title": "Kopi pagi tim ops",
+			"my_share": 36000,
+			"my_status": "pending"
+		}
+	]
 }
 ```
 
@@ -406,19 +419,20 @@ POST /api/bills
 ```
 
 **Request Body:**
+
 ```json
 {
-  "title": "Makan malam di Restoran Padang",
-  "category": "makanan",
-  "total_amount": 480000,
-  "split_method": "equal",
-  "receipt_url": "https://storage.../receipt.jpg",
-  "participants": [
-    { "user_id": "uuid" },
-    { "user_id": "uuid", "amount": 100000 },
-    { "phone": "+62812345678" }
-  ],
-  "linked_group_id": "uuid"
+	"title": "Makan malam di Restoran Padang",
+	"category": "makanan",
+	"total_amount": 480000,
+	"split_method": "equal",
+	"receipt_url": "https://storage.../receipt.jpg",
+	"participants": [
+		{ "user_id": "uuid" },
+		{ "user_id": "uuid", "amount": 100000 },
+		{ "phone": "+62812345678" }
+	],
+	"linked_group_id": "uuid"
 }
 ```
 
@@ -431,6 +445,7 @@ POST /api/bills
 | `shares` | Split by number of shares |
 
 **Categories:**
+
 - `makanan` - Food
 - `transport` - Transportation
 - `penginapan` - Accommodation
@@ -467,10 +482,11 @@ POST /api/bills/:billId/participants
 ```
 
 **Request Body:**
+
 ```json
 {
-  "user_id": "uuid",
-  "amount": 100000
+	"user_id": "uuid",
+	"amount": 100000
 }
 ```
 
@@ -505,12 +521,13 @@ POST /api/settlements
 ```
 
 **Request Body:**
+
 ```json
 {
-  "bill_id": "uuid",
-  "amount": 96000,
-  "proof_url": "https://storage.../proof.jpg",
-  "notes": "Transfer via BCA"
+	"bill_id": "uuid",
+	"amount": 96000,
+	"proof_url": "https://storage.../proof.jpg",
+	"notes": "Transfer via BCA"
 }
 ```
 
@@ -527,9 +544,10 @@ PATCH /api/settlements/:id/reject
 ```
 
 **Request Body:**
+
 ```json
 {
-  "reason": "Screenshot tidak jelas"
+	"reason": "Screenshot tidak jelas"
 }
 ```
 
@@ -544,20 +562,21 @@ GET /api/bills/:billId/comments
 ```
 
 **Response:**
+
 ```json
 [
-  {
-    "id": "uuid",
-    "bill_id": "uuid",
-    "user_id": "uuid",
-    "content": "Sudah transfer ya, mohon dicek",
-    "is_deleted": false,
-    "created_at": "2024-05-14T12:00:00Z",
-    "user": {
-      "full_name": "Budi Santoso",
-      "avatar_url": "https://..."
-    }
-  }
+	{
+		"id": "uuid",
+		"bill_id": "uuid",
+		"user_id": "uuid",
+		"content": "Sudah transfer ya, mohon dicek",
+		"is_deleted": false,
+		"created_at": "2024-05-14T12:00:00Z",
+		"user": {
+			"full_name": "Budi Santoso",
+			"avatar_url": "https://..."
+		}
+	}
 ]
 ```
 
@@ -568,10 +587,11 @@ POST /api/comments
 ```
 
 **Request Body:**
+
 ```json
 {
-  "bill_id": "uuid",
-  "content": "Sudah transfer ya, mohon dicek"
+	"bill_id": "uuid",
+	"content": "Sudah transfer ya, mohon dicek"
 }
 ```
 
@@ -582,9 +602,10 @@ PATCH /api/comments/:id
 ```
 
 **Request Body:**
+
 ```json
 {
-  "content": "Updated comment"
+	"content": "Updated comment"
 }
 ```
 
@@ -607,18 +628,19 @@ GET /api/recurring-bills
 ```
 
 **Response:**
+
 ```json
 [
-  {
-    "id": "uuid",
-    "title": "Listrik kos bersama",
-    "category": "utilitas",
-    "base_amount": 650000,
-    "frequency": "monthly",
-    "next_due_date": "2024-05-31",
-    "status": "active",
-    "participant_count": 4
-  }
+	{
+		"id": "uuid",
+		"title": "Listrik kos bersama",
+		"category": "utilitas",
+		"base_amount": 650000,
+		"frequency": "monthly",
+		"next_due_date": "2024-05-31",
+		"status": "active",
+		"participant_count": 4
+	}
 ]
 ```
 
@@ -635,17 +657,16 @@ POST /api/recurring-bills
 ```
 
 **Request Body:**
+
 ```json
 {
-  "title": "Listrik kos bersama",
-  "category": "utilitas",
-  "base_amount": 650000,
-  "frequency": "monthly",
-  "split_method": "equal",
-  "start_date": "2024-05-01",
-  "participants": [
-    { "user_id": "uuid" }
-  ]
+	"title": "Listrik kos bersama",
+	"category": "utilitas",
+	"base_amount": 650000,
+	"frequency": "monthly",
+	"split_method": "equal",
+	"start_date": "2024-05-01",
+	"participants": [{ "user_id": "uuid" }]
 }
 ```
 
@@ -684,17 +705,18 @@ GET /api/debt-simplifications/bill/:billId
 ```
 
 **Response:**
+
 ```json
 {
-  "original_transactions": 6,
-  "simplified_transactions": 2,
-  "transfers": [
-    {
-      "from_user_id": "uuid",
-      "to_user_id": "uuid",
-      "amount": 246000
-    }
-  ]
+	"original_transactions": 6,
+	"simplified_transactions": 2,
+	"transfers": [
+		{
+			"from_user_id": "uuid",
+			"to_user_id": "uuid",
+			"amount": 246000
+		}
+	]
 }
 ```
 
@@ -715,21 +737,23 @@ GET /api/notifications
 ```
 
 **Response:**
+
 ```json
 [
-  {
-    "id": "uuid",
-    "type": "payment_confirmed",
-    "title": "Pembayaran dikonfirmasi",
-    "body": "Arisan Kantor Lt. 3 ronde 8 telah dikonfirmasi admin.",
-    "is_read": false,
-    "data": { "group_id": "uuid", "round_id": "uuid" },
-    "created_at": "2024-05-14T10:00:00Z"
-  }
+	{
+		"id": "uuid",
+		"type": "payment_confirmed",
+		"title": "Pembayaran dikonfirmasi",
+		"body": "Arisan Kantor Lt. 3 ronde 8 telah dikonfirmasi admin.",
+		"is_read": false,
+		"data": { "group_id": "uuid", "round_id": "uuid" },
+		"created_at": "2024-05-14T10:00:00Z"
+	}
 ]
 ```
 
 **Notification Types:**
+
 - `payment_confirmed` - Payment was confirmed
 - `payment_rejected` - Payment was rejected
 - `bill_created` - New bill created
@@ -745,9 +769,10 @@ GET /api/notifications/unread-count
 ```
 
 **Response:**
+
 ```json
 {
-  "count": 4
+	"count": 4
 }
 ```
 
@@ -780,17 +805,18 @@ GET /api/contacts?sort=recent&limit=50
 | `limit` | number | `50` | Positive integer |
 
 **Response:**
+
 ```json
 [
-  {
-    "id": "uuid",
-    "name": "Budi Santoso",
-    "phone": "+62812111222",
-    "is_on_platform": true,
-    "user_id": "uuid",
-    "use_count": 5,
-    "last_used_at": "2024-05-14T10:00:00Z"
-  }
+	{
+		"id": "uuid",
+		"name": "Budi Santoso",
+		"phone": "+62812111222",
+		"is_on_platform": true,
+		"user_id": "uuid",
+		"use_count": 5,
+		"last_used_at": "2024-05-14T10:00:00Z"
+	}
 ]
 ```
 
@@ -809,10 +835,11 @@ POST /api/contacts
 ```
 
 **Request Body:**
+
 ```json
 {
-  "name": "Budi Santoso",
-  "phone": "+62812111222"
+	"name": "Budi Santoso",
+	"phone": "+62812111222"
 }
 ```
 
@@ -823,15 +850,18 @@ POST /api/contacts/touch
 ```
 
 **Request Body:**
+
 ```json
 {
-  "phone": "+62812111222"
+	"phone": "+62812111222"
 }
 ```
+
 or
+
 ```json
 {
-  "contact_id": "uuid"
+	"contact_id": "uuid"
 }
 ```
 
@@ -860,25 +890,28 @@ POST /api/storage/upload-url
 ```
 
 **Request Body:**
+
 ```json
 {
-  "bucket": "payment-proofs",
-  "filename": "proof-2024-05-14.jpg",
-  "content_type": "image/jpeg"
+	"bucket": "payment-proofs",
+	"filename": "proof-2024-05-14.jpg",
+	"content_type": "image/jpeg"
 }
 ```
 
 **Response:**
+
 ```json
 {
-  "bucket": "payment-proofs",
-  "path": "user-uuid/proof-2024-05-14.jpg",
-  "signed_url": "https://...",
-  "token": "..."
+	"bucket": "payment-proofs",
+	"path": "user-uuid/proof-2024-05-14.jpg",
+	"signed_url": "https://...",
+	"token": "..."
 }
 ```
 
 **Buckets:**
+
 - `payment-proofs` - Arisan payment proofs
 - `bill-receipts` - Patungan receipts
 - `avatars` - User profile pictures
@@ -890,18 +923,20 @@ POST /api/storage/read-url
 ```
 
 **Request Body:**
+
 ```json
 {
-  "bucket": "payment-proofs",
-  "path": "user-uuid/proof.jpg"
+	"bucket": "payment-proofs",
+	"path": "user-uuid/proof.jpg"
 }
 ```
 
 **Response:**
+
 ```json
 {
-  "signed_url": "https://...",
-  "expires_at": "2024-05-14T11:00:00Z"
+	"signed_url": "https://...",
+	"expires_at": "2024-05-14T11:00:00Z"
 }
 ```
 
@@ -912,10 +947,11 @@ DELETE /api/storage/object
 ```
 
 **Request Body:**
+
 ```json
 {
-  "bucket": "payment-proofs",
-  "path": "user-uuid/proof.jpg"
+	"bucket": "payment-proofs",
+	"path": "user-uuid/proof.jpg"
 }
 ```
 
@@ -930,23 +966,25 @@ POST /api/invite-links
 ```
 
 **Request Body:**
+
 ```json
 {
-  "group_id": "uuid",
-  "expires_in_days": 7,
-  "max_uses": 10
+	"group_id": "uuid",
+	"expires_in_days": 7,
+	"max_uses": 10
 }
 ```
 
 **Response:**
+
 ```json
 {
-  "id": "uuid",
-  "code": "SARI-K3X9",
-  "group_id": "uuid",
-  "expires_at": "2024-05-21T00:00:00Z",
-  "max_uses": 10,
-  "use_count": 0
+	"id": "uuid",
+	"code": "SARI-K3X9",
+	"group_id": "uuid",
+	"expires_at": "2024-05-21T00:00:00Z",
+	"max_uses": 10,
+	"use_count": 0
 }
 ```
 
@@ -957,15 +995,16 @@ GET /api/invite-links/validate/:code
 ```
 
 **Response:**
+
 ```json
 {
-  "valid": true,
-  "group": {
-    "id": "uuid",
-    "name": "Arisan Kantor Lt. 3",
-    "member_count": 10,
-    "max_members": 12
-  }
+	"valid": true,
+	"group": {
+		"id": "uuid",
+		"name": "Arisan Kantor Lt. 3",
+		"member_count": 10,
+		"max_members": 12
+	}
 }
 ```
 
@@ -986,24 +1025,25 @@ GET /api/plans
 ```
 
 **Response:**
+
 ```json
 [
-  {
-    "id": "uuid",
-    "name": "Free",
-    "price_monthly": 0,
-    "max_groups": 2,
-    "max_bills": 5,
-    "features": ["basic_analytics"]
-  },
-  {
-    "id": "uuid",
-    "name": "Pro",
-    "price_monthly": 49000,
-    "max_groups": 10,
-    "max_bills": 50,
-    "features": ["advanced_analytics", "export", "priority_support"]
-  }
+	{
+		"id": "uuid",
+		"name": "Free",
+		"price_monthly": 0,
+		"max_groups": 2,
+		"max_bills": 5,
+		"features": ["basic_analytics"]
+	},
+	{
+		"id": "uuid",
+		"name": "Pro",
+		"price_monthly": 49000,
+		"max_groups": 10,
+		"max_bills": 50,
+		"features": ["advanced_analytics", "export", "priority_support"]
+	}
 ]
 ```
 
@@ -1020,10 +1060,11 @@ POST /api/subscriptions
 ```
 
 **Request Body:**
+
 ```json
 {
-  "plan_id": "uuid",
-  "payment_method": "midtrans"
+	"plan_id": "uuid",
+	"payment_method": "midtrans"
 }
 ```
 
@@ -1038,14 +1079,15 @@ GET /api/usage/me
 ```
 
 **Response:**
+
 ```json
 {
-  "user_id": "uuid",
-  "month": "2024-05",
-  "groups_created": 2,
-  "bills_created": 8,
-  "max_groups": 10,
-  "max_bills": 50
+	"user_id": "uuid",
+	"month": "2024-05",
+	"groups_created": 2,
+	"bills_created": 8,
+	"max_groups": 10,
+	"max_bills": 50
 }
 ```
 
@@ -1057,38 +1099,38 @@ All errors follow a consistent format:
 
 ```json
 {
-  "statusCode": 400,
-  "message": "Error description",
-  "error": "Bad Request"
+	"statusCode": 400,
+	"message": "Error description",
+	"error": "Bad Request"
 }
 ```
 
 ### Common Status Codes
 
-| Code | Description |
-|------|-------------|
-| `200` | Success |
-| `201` | Created |
-| `204` | No Content |
-| `400` | Bad Request - Invalid input |
-| `401` | Unauthorized - Invalid or missing token |
-| `403` | Forbidden - Insufficient permissions |
-| `404` | Not Found |
-| `409` | Conflict - Resource already exists |
+| Code  | Description                              |
+| ----- | ---------------------------------------- |
+| `200` | Success                                  |
+| `201` | Created                                  |
+| `204` | No Content                               |
+| `400` | Bad Request - Invalid input              |
+| `401` | Unauthorized - Invalid or missing token  |
+| `403` | Forbidden - Insufficient permissions     |
+| `404` | Not Found                                |
+| `409` | Conflict - Resource already exists       |
 | `422` | Unprocessable Entity - Validation failed |
-| `429` | Too Many Requests - Rate limited |
-| `500` | Internal Server Error |
+| `429` | Too Many Requests - Rate limited         |
+| `500` | Internal Server Error                    |
 
 ### Validation Errors
 
 ```json
 {
-  "statusCode": 400,
-  "message": [
-    "name must be a string",
-    "contribution_amount must be a positive number"
-  ],
-  "error": "Bad Request"
+	"statusCode": 400,
+	"message": [
+		"name must be a string",
+		"contribution_amount must be a positive number"
+	],
+	"error": "Bad Request"
 }
 ```
 
@@ -1140,7 +1182,7 @@ XENDIT_SECRET_KEY=
 ### Frontend (.env)
 
 ```env
-VITE_SUPABASE_URL=https://xxx.supabase.co
+SUPABASE_URL=https://xxx.supabase.co
 VITE_SUPABASE_ANON_KEY=eyJ...
 VITE_API_URL=http://localhost:3000/api
 ```
@@ -1174,6 +1216,7 @@ npm run test:cov
 ## Quick Start
 
 1. **Clone and install:**
+
    ```bash
    git clone <repo>
    cd Arisan-Digital
@@ -1182,17 +1225,20 @@ npm run test:cov
    ```
 
 2. **Configure environment:**
+
    ```bash
    cp backend/.env.example backend/.env
    # Edit backend/.env with your Supabase credentials
    ```
 
 3. **Start backend:**
+
    ```bash
    cd backend && npm run start:dev
    ```
 
 4. **Start frontend:**
+
    ```bash
    cd frontend && npm run dev
    ```
@@ -1203,4 +1249,4 @@ npm run test:cov
 
 ---
 
-*Last updated: May 2026*
+_Last updated: May 2026_

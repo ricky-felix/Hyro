@@ -23,7 +23,7 @@ const env = Object.fromEntries(
     .map((m) => [m[1], m[2].trim()]),
 );
 
-const sb = createClient(env.VITE_SUPABASE_URL, env.VITE_SUPABASE_PUBLISHABLE_KEY);
+const sb = createClient(env.SUPABASE_URL, env.SUPABASE_PUBLISHABLE_KEY);
 const ok = (m) => console.log("  ✓", m);
 const fail = (m, e) => { console.log("  ✗", m, "→", e?.message || e); process.exitCode = 1; };
 

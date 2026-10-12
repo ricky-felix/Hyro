@@ -36,14 +36,14 @@ import { InputField } from "../components/auth/InputField";
 //   - demo password → skip login, straight into /app on mockup data
 //   - real password → unlock the normal login form, live data only
 // Production builds default the real password to "real_data_hyro"; in dev it
-// has no default, so only the demo path exists unless VITE_GATE_PASSWORD_REAL
+// has no default, so only the demo path exists unless GATE_PASSWORD_REAL
 // is set.
 const GATE_PASSWORD_DEMO =
   import.meta.env.VITE_GATE_PASSWORD_DEMO ||
   import.meta.env.VITE_GATE_PASSWORD ||
   "arisan-patungan-2026";
 const GATE_PASSWORD_REAL =
-  import.meta.env.VITE_GATE_PASSWORD_REAL ||
+  import.meta.env.GATE_PASSWORD_REAL ||
   (import.meta.env.PROD ? "real_data_hyro" : "");
 
 function PasswordGate({ children }) {
