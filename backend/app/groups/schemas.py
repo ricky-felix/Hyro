@@ -53,5 +53,12 @@ class UpdateGroupDto(BaseModel):
     start_date: Optional[str] = None
     total_rounds: Optional[int] = Field(default=None, ge=2)
 
+    # Offline-sync conflict handling: the client's last-known value for each
+    # field it is changing, captured when the edit was started (NOT a client
+    # timestamp — just used to detect "did someone else change this exact
+    # field before my write landed?"). Optional — online edits omit it and
+    # behave exactly as before.
+    base_snapshot: Optional[dict] = None
+
     _v_url = field_validator("photo_url")(_validate_url)
     _v_date = field_validator("start_date")(_validate_date_string)

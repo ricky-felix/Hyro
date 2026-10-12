@@ -86,15 +86,44 @@ class GroupsService:
 
     def update(self, group_id: str, dto: UpdateGroupDto, user_id: str) -> dict:
         self.assert_group_admin(group_id, user_id)
+
+        changes = dto.model_dump(exclude_unset=True, exclude={"base_snapshot"})
+        overridden_fields = []
+
+        if dto.base_snapshot:
+            current = maybe_single(
+                self.sb.admin.from_("groups").select("*").eq("id", group_id)
+            )
+            if current:
+                for field, baseline_value in dto.base_snapshot.items():
+                    if field not in changes:
+                        continue
+                    # Someone else's write already changed this exact field
+                    # since the client captured its baseline — the client was
+                    # editing a stale value. Per-field last-write-wins: drop
+                    # this field from the update and tell the caller so the
+                    # UI can surface "your change was overridden".
+                    if current.get(field) != baseline_value:
+                        changes.pop(field)
+                        overridden_fields.append(field)
+
+        if not changes:
+            data = maybe_single(
+                self.sb.admin.from_("groups").select("*").eq("id", group_id)
+            )
+            if not data:
+                raise HTTPException(404, f"Group {group_id} not found")
+            return {**data, "overridden_fields": overridden_fields}
+
         res = (
             self.sb.admin.from_("groups")
-            .update(dto.model_dump(exclude_unset=True))
+            .update(changes)
             .eq("id", group_id)
             .execute()
         )
         if not res.data:
             raise HTTPException(404, f"Group {group_id} not found")
-        return res.data[0]
+        return {**res.data[0], "overridden_fields": overridden_fields}
 
     def remove(self, group_id: str, user_id: str) -> dict:
         group = maybe_single(

@@ -32,7 +32,12 @@ class ApiClient {
 
     if (!response.ok) {
       const error = await response.json().catch(() => ({ message: 'Request failed' }));
-      throw new Error(error.message || `HTTP ${response.status}`);
+      const err = new Error(error.message || `HTTP ${response.status}`);
+      // Lets callers (e.g. the offline outbox) tell a permanent rejection
+      // (4xx — bad request, forbidden, not found) from a transient one
+      // (network failure, 5xx) without parsing the message string.
+      err.status = response.status;
+      throw err;
     }
 
     // Handle 204 No Content responses

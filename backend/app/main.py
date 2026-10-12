@@ -36,6 +36,7 @@ from .payment_transactions.router import router as payment_transactions_router
 from .usage.router import router as usage_router
 from .contacts.router import router as contacts_router
 from .storage.router import router as storage_router
+from .sync.router import router as sync_router
 
 # Webhooks (mounted WITHOUT the /api prefix)
 from .billing.xendit_webhook import router as xendit_webhook_router
@@ -106,6 +107,7 @@ for r in (
     usage_router,
     contacts_router,
     storage_router,
+    sync_router,
 ):
     api.include_router(r)
 

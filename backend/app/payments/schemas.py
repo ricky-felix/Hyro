@@ -23,14 +23,24 @@ def _validate_url(v):
     return v
 
 
+def _validate_uuid_optional(v):
+    if v is None:
+        return v
+    return _validate_uuid(v)
+
+
 class CreatePaymentDto(BaseModel):
     model_config = ConfigDict(extra="ignore")
 
+    # Client-generated UUID (offline outbox) — makes retries idempotent.
+    # Omit for a normal online submission; the DB generates one as before.
+    id: Optional[str] = None
     round_id: str
     amount: int = Field(ge=1000)
     proof_url: Optional[str] = None
     notes: Optional[str] = None
 
+    _v_id = field_validator("id")(_validate_uuid_optional)
     _v_round_id = field_validator("round_id")(_validate_uuid)
     _v_proof_url = field_validator("proof_url")(_validate_url)
 

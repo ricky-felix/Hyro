@@ -1,5 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { notificationsService } from '../services';
+import { config } from '../config';
+import { getCachedNotifications } from '../offline/cache';
+import { supabase } from '../lib/supabase';
 
 /**
  * useNotifications — loads notifications + unread count from the API.
@@ -37,7 +40,23 @@ export function useNotifications() {
         if (cancelled) return;
         console.error('[useNotifications] failed to load:', err.message);
         setError(err.message);
-        // Keep empty arrays — the screen shows its static JSX as fallback
+
+        if (config.offlineEnabled) {
+          try {
+            const { data } = await supabase.auth.getSession();
+            const userId = data?.session?.user?.id;
+            if (userId) {
+              const cached = await getCachedNotifications(userId);
+              if (!cancelled) {
+                setNotifications(cached);
+                setUnreadCount(cached.filter(n => !n.is_read).length);
+              }
+            }
+          } catch (cacheErr) {
+            console.error('[useNotifications] cache fallback failed:', cacheErr.message);
+          }
+        }
+        // Otherwise keep empty arrays — the screen shows its static JSX as fallback
       } finally {
         if (!cancelled) setLoading(false);
       }

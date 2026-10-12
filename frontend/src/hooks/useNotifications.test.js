@@ -14,8 +14,18 @@ vi.mock('../services', () => ({
   },
 }));
 
+vi.mock('../config', () => ({ config: { offlineEnabled: true } }));
+vi.mock('../lib/supabase', () => ({
+  supabase: { auth: { getSession: vi.fn() } },
+}));
+vi.mock('../offline/cache', () => ({
+  getCachedNotifications: vi.fn(),
+}));
+
 import { renderHook, waitFor, act } from '@testing-library/react';
 import { notificationsService } from '../services';
+import { supabase } from '../lib/supabase';
+import { getCachedNotifications } from '../offline/cache';
 import { useNotifications } from './useNotifications';
 
 const MOCK_NOTIFICATIONS = [
@@ -29,6 +39,8 @@ beforeEach(() => {
   notificationsService.getUnreadCount.mockResolvedValue({ count: 1 });
   notificationsService.markRead.mockResolvedValue({ is_read: true });
   notificationsService.markAllRead.mockResolvedValue({ updated: 1 });
+  supabase.auth.getSession.mockResolvedValue({ data: { session: null } });
+  getCachedNotifications.mockResolvedValue([]);
 });
 
 describe('useNotifications', () => {
@@ -74,6 +86,23 @@ describe('useNotifications', () => {
 
     expect(result.current.error).toBe('Jaringan error');
     expect(result.current.notifications).toEqual([]);
+  });
+
+  it('falls back to the offline cache on API failure when a session exists', async () => {
+    notificationsService.list.mockRejectedValue(new Error('Jaringan error'));
+    notificationsService.getUnreadCount.mockRejectedValue(new Error('Jaringan error'));
+    supabase.auth.getSession.mockResolvedValue({ data: { session: { user: { id: 'u1' } } } });
+    getCachedNotifications.mockResolvedValue([
+      { id: 'n1', is_read: false },
+      { id: 'n2', is_read: true },
+    ]);
+
+    const { result } = renderHook(() => useNotifications());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    expect(getCachedNotifications).toHaveBeenCalledWith('u1');
+    expect(result.current.notifications).toHaveLength(2);
+    expect(result.current.unreadCount).toBe(1);
   });
 
   describe('markRead()', () => {

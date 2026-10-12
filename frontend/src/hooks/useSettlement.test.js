@@ -9,11 +9,28 @@ vi.mock('../services', () => ({
   billSettlementsService: { create: vi.fn() },
 }));
 
+// Offline layer off by default — these tests cover the pre-existing
+// online-only path. See the dedicated describe block below for the
+// offlineEnabled=true (outbox) path.
+vi.mock('../config', () => ({ config: { offlineEnabled: false } }));
+vi.mock('../lib/supabase', () => ({
+  supabase: { auth: { getSession: vi.fn() } },
+}));
+vi.mock('../offline/writes', () => ({
+  enqueueContribution: vi.fn(),
+}));
+
 import { renderHook, act } from '@testing-library/react';
 import { paymentsService, billSettlementsService } from '../services';
+import { config } from '../config';
+import { supabase } from '../lib/supabase';
+import { enqueueContribution } from '../offline/writes';
 import { useSettlement } from './useSettlement';
 
-beforeEach(() => vi.clearAllMocks());
+beforeEach(() => {
+  vi.clearAllMocks();
+  config.offlineEnabled = false;
+});
 
 describe('useSettlement', () => {
   it('starts with submitting=false, submitted=false, error=null', () => {
@@ -194,6 +211,59 @@ describe('useSettlement', () => {
 
       expect(returnValue).toBeNull();
       expect(result.current.error).toBe('Settlement failed');
+    });
+  });
+
+  // ── submitArisan() with the offline layer enabled ──────────────────────────
+  describe('submitArisan() with offlineEnabled=true', () => {
+    beforeEach(() => {
+      config.offlineEnabled = true;
+      supabase.auth.getSession.mockResolvedValue({ data: { session: { user: { id: 'u1' } } } });
+    });
+
+    it('routes through enqueueContribution instead of paymentsService.create', async () => {
+      enqueueContribution.mockResolvedValue({ id: 'local-1', status: 'pending' });
+      const { result } = renderHook(() => useSettlement());
+
+      await act(async () => {
+        await result.current.submitArisan({ roundId: 'r1', amount: 100000, notes: 'Via GoPay' });
+      });
+
+      expect(enqueueContribution).toHaveBeenCalledWith({
+        userId: 'u1',
+        roundId: 'r1',
+        amount: 100000,
+        proofUrl: null,
+        notes: 'Via GoPay',
+      });
+      expect(paymentsService.create).not.toHaveBeenCalled();
+    });
+
+    it('returns the optimistic (pending) row and sets submitted=true', async () => {
+      const optimistic = { id: 'local-2', status: 'pending', _local: true };
+      enqueueContribution.mockResolvedValue(optimistic);
+      const { result } = renderHook(() => useSettlement());
+
+      let returnValue;
+      await act(async () => {
+        returnValue = await result.current.submitArisan({ roundId: 'r1', amount: 50000 });
+      });
+
+      expect(returnValue).toEqual(optimistic);
+      expect(result.current.submitted).toBe(true);
+    });
+
+    it('sets error and returns null if enqueueing itself fails', async () => {
+      enqueueContribution.mockRejectedValue(new Error('IndexedDB unavailable'));
+      const { result } = renderHook(() => useSettlement());
+
+      let returnValue;
+      await act(async () => {
+        returnValue = await result.current.submitArisan({ roundId: 'r1', amount: 50000 });
+      });
+
+      expect(returnValue).toBeNull();
+      expect(result.current.error).toBe('IndexedDB unavailable');
     });
   });
 });

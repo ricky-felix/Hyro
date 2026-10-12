@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { groupsService, billsService } from '../services';
 import { ALL_CARDS } from '../components/application/v2/home/data';
+import { config } from '../config';
+import { getCachedGroups } from '../offline/cache';
 
 /**
  * Maps a backend group object to the card shape expected by HomeDeck / StoryCard.
@@ -152,10 +154,25 @@ export function useHomeCards() {
         setCards(merged.length > 0 ? merged : ALL_CARDS);
       } catch (err) {
         if (cancelled) return;
-        console.error('[useHomeCards] failed to load, using static fallback:', err.message);
+        console.error('[useHomeCards] failed to load:', err.message);
         setError(err.message);
-        // Keep ALL_CARDS as the fallback — the UI still renders
-        setCards(ALL_CARDS);
+
+        // Offline (or the request otherwise failed) — fall back to the local
+        // cache before giving up to the static mock data.
+        if (config.offlineEnabled) {
+          try {
+            const cachedGroups = await getCachedGroups();
+            const groupCards = cachedGroups.map(mapGroupToCard);
+            if (!cancelled && groupCards.length > 0) {
+              setCards(groupCards);
+              return;
+            }
+          } catch (cacheErr) {
+            console.error('[useHomeCards] cache fallback failed:', cacheErr.message);
+          }
+        }
+
+        if (!cancelled) setCards(ALL_CARDS);
       } finally {
         if (!cancelled) setLoading(false);
       }

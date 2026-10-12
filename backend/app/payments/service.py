@@ -52,25 +52,45 @@ class PaymentsService:
         if not round_:
             raise HTTPException(404, f"Round {dto.round_id} not found")
 
-        try:
-            res = (
-                self.sb.admin.from_("payments")
-                .insert(
-                    {
-                        "group_id": round_["group_id"],
-                        "round_id": dto.round_id,
-                        "payer_id": user_id,
-                        "amount": dto.amount,
-                        "status": "pending",
-                        "proof_url": dto.proof_url,
-                        "notes": dto.notes,
-                        "paid_at": iso_now(),
-                    }
-                )
-                .execute()
+        # Idempotent retry: the offline outbox resubmits with the same
+        # client-generated id after a flaky response (e.g. the server
+        # applied the write but the ack never reached the client). Return
+        # the already-created row instead of erroring — a retry must never
+        # double-count a contribution.
+        if dto.id:
+            existing = maybe_single(
+                self.sb.admin.from_("payments").select("*").eq("id", dto.id)
             )
+            if existing:
+                return existing
+
+        payload = {
+            "group_id": round_["group_id"],
+            "round_id": dto.round_id,
+            "payer_id": user_id,
+            "amount": dto.amount,
+            "status": "pending",
+            "proof_url": dto.proof_url,
+            "notes": dto.notes,
+            "paid_at": iso_now(),
+        }
+        if dto.id:
+            payload["id"] = dto.id
+
+        try:
+            res = self.sb.admin.from_("payments").insert(payload).execute()
         except Exception as e:
             if "23505" in str(e):
+                # Either a concurrent retry raced us to insert the same id,
+                # or this payer already has a (different-id) payment for
+                # this round. Re-fetch by id first — that's the idempotent
+                # case, not a real conflict.
+                if dto.id:
+                    existing = maybe_single(
+                        self.sb.admin.from_("payments").select("*").eq("id", dto.id)
+                    )
+                    if existing:
+                        return existing
                 raise HTTPException(
                     400, "You have already submitted a payment for this round"
                 )

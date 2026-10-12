@@ -6,6 +6,10 @@ import "./styles/app-v1.css"; // v1 / app component classes (.app-*, badges, but
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { ToastProvider } from "./context/ToastContext";
 import { AccountPromptProvider } from "./context/AccountPromptContext";
+import { OfflineProvider } from "./context/OfflineContext";
+import OfflineBanner from "./components/application/v2/OfflineBanner";
+import PwaToastBridge from "./components/application/v2/PwaToastBridge";
+import DebugPanel from "./components/application/v2/debug/DebugPanel";
 
 // website
 import LandingPage from "./pages/LandingPage";
@@ -234,9 +238,14 @@ function App() {
   return (
     <AuthProvider>
       <ToastProvider>
-        <AccountPromptProvider>
-          <AppRoutes />
-        </AccountPromptProvider>
+        <OfflineProvider>
+          <AccountPromptProvider>
+            <PwaToastBridge />
+            <OfflineBanner />
+            <DebugPanel />
+            <AppRoutes />
+          </AccountPromptProvider>
+        </OfflineProvider>
       </ToastProvider>
     </AuthProvider>
   );

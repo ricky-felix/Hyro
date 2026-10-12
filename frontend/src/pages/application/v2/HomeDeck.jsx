@@ -7,6 +7,8 @@ import CoachMarks from "../../../components/application/v2/CoachMarks";
 import PaymentMethodSelector from "../../../components/application/v2/metodePembayaran/PaymentMethodSelector";
 import { useToast } from "../../../context/ToastContext";
 import { useHomeCards } from "../../../hooks/useGroups";
+import { groupsService } from "../../../services";
+import { config } from "../../../config";
 
 // First-run coach-mark gate. Defaults to "seen" if storage is unavailable so a
 // private-mode visitor is never trapped, and skips the dev /screens/* capture
@@ -35,6 +37,7 @@ export default function HomeDeck({ cards: cardsProp }) {
   // PaymentMethodSelector — shown for patungan peer-to-peer pay when payeeUserId is known.
   const [methodSelector, setMethodSelector] = useState({ open: false, card: null });
   const [composeOpen, setComposeOpen] = useState(false);
+  const [demoBusy, setDemoBusy] = useState(false);
   const [coachOpen, setCoachOpen] = useState(() => {
     if (location.pathname.startsWith("/screens")) return false;
     try {
@@ -43,6 +46,31 @@ export default function HomeDeck({ cards: cardsProp }) {
       return false;
     }
   });
+
+  // Tester readiness: one tap to get a working group instead of an empty
+  // app. Only offered when the account is genuinely empty, and only when
+  // the offline layer is on (this button exists for test builds).
+  async function handleCreateDemo() {
+    setDemoBusy(true);
+    try {
+      const today = new Date().toISOString().slice(0, 10);
+      await groupsService.create({
+        name: "Arisan Demo RT 05",
+        description: "Grup contoh — aman dicoba-coba, bukan arisan beneran.",
+        amount_per_round: 50000,
+        frequency: "monthly",
+        giliran_method: "random",
+        start_date: today,
+        total_rounds: 6,
+      });
+      toast("Grup demo siap! Lagi disiapin...");
+      window.location.reload();
+    } catch (err) {
+      console.error('[HomeDeck] handleCreateDemo failed:', err.message);
+      toast("Gagal bikin grup demo — coba lagi, atau pastikan kamu lagi online", "error");
+      setDemoBusy(false);
+    }
+  }
 
   function closeCoach() {
     try {
@@ -228,7 +256,11 @@ export default function HomeDeck({ cards: cardsProp }) {
           {visibleCards.length === 0 ? (
             cards.length === 0 ? (
               // Account genuinely empty (no arisan/patungan) — welcoming card.
-              <EmptyCard onCta={() => setComposeOpen(true)} />
+              <EmptyCard
+                onCta={() => setComposeOpen(true)}
+                onDemo={config.offlineEnabled ? handleCreateDemo : undefined}
+                demoBusy={demoBusy}
+              />
             ) : (
               // A filter is active but yields nothing while other cards exist.
               <div className="empty-state">

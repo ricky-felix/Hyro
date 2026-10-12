@@ -4,6 +4,9 @@
 import '@testing-library/jest-dom/vitest'
 import { afterEach } from 'vitest'
 import { cleanup } from '@testing-library/react'
+// jsdom has no IndexedDB — the offline layer (src/offline/) uses Dexie, so
+// tests need this polyfill to exercise it without a real browser.
+import 'fake-indexeddb/auto'
 
 afterEach(() => {
   cleanup()

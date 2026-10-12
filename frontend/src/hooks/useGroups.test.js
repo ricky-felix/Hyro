@@ -15,14 +15,21 @@ vi.mock('../services', () => ({
   billsService: { list: vi.fn() },
 }));
 
+vi.mock('../config', () => ({ config: { offlineEnabled: true } }));
+vi.mock('../offline/cache', () => ({
+  getCachedGroups: vi.fn(),
+}));
+
 import { renderHook, waitFor } from '@testing-library/react';
 import { groupsService, billsService } from '../services';
+import { getCachedGroups } from '../offline/cache';
 import { useHomeCards } from './useGroups';
 
 beforeEach(() => {
   vi.clearAllMocks();
   groupsService.list.mockResolvedValue([]);
   billsService.list.mockResolvedValue([]);
+  getCachedGroups.mockResolvedValue([]);
 });
 
 describe('useHomeCards', () => {
@@ -194,5 +201,19 @@ describe('useHomeCards', () => {
 
     expect(result.current.error).toBe('Server error');
     expect(result.current.cards).toEqual([{ id: 'fallback', type: 'arisan' }]);
+  });
+
+  it('falls back to the offline cache on API error when groups are cached', async () => {
+    groupsService.list.mockRejectedValue(new Error('Server error'));
+    billsService.list.mockRejectedValue(new Error('Server error'));
+    getCachedGroups.mockResolvedValue([
+      { id: 'g1', name: 'Arisan Cache', status: 'active', amount_per_round: 100000 },
+    ]);
+
+    const { result } = renderHook(() => useHomeCards());
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    expect(result.current.cards).toHaveLength(1);
+    expect(result.current.cards[0].id).toBe('g1');
   });
 });

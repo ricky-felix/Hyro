@@ -1,6 +1,11 @@
 {
+  "id": "/app",
   "name": "Hyro",
   "short_name": "Arisan",
+  "description": "Kelola arisan dan patungan bersama, tetap jalan walau sinyal lagi jelek.",
+  "start_url": "/app",
+  "scope": "/",
+  "lang": "id",
   "icons": [
     {
       "src": "/favicon/web-app-manifest-192x192.png",

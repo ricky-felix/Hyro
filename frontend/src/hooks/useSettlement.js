@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { billSettlementsService, paymentsService } from '../services';
+import { config } from '../config';
+import { supabase } from '../lib/supabase';
+import { enqueueContribution } from '../offline/writes';
 
 /**
  * useSettlement — wraps settlement / payment submission for BuktiTransfer.
@@ -30,6 +33,23 @@ export function useSettlement() {
     setSubmitting(true);
     setError(null);
     try {
+      // Offline-first path: always queue through the outbox (even while
+      // online) so the UI gets one consistent pending→synced→failed state
+      // for every contribution, and a flaky connection never blocks the
+      // user from recording "I paid" locally first.
+      if (config.offlineEnabled) {
+        const { data } = await supabase.auth.getSession();
+        const payment = await enqueueContribution({
+          userId: data?.session?.user?.id,
+          roundId,
+          amount,
+          proofUrl,
+          notes,
+        });
+        setSubmitted(true);
+        return payment;
+      }
+
       const payment = await paymentsService.create({
         round_id: roundId,
         amount: Math.round(amount),

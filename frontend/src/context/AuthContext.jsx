@@ -46,6 +46,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import { usersService } from "../services/users.service";
 import { parseIdentifier } from "../utils/identifier";
+import { config } from "../config";
 
 const AuthContext = createContext(null);
 
@@ -73,7 +74,10 @@ export function AuthProvider({ children }) {
         // Load the profile from the backend (GET /users/me). The profile row is
         // created by the handle_new_user DB trigger from the registered name —
         // the frontend never writes it, so there is no guest/"Tamu" placeholder.
-        usersService.getMe().then(setProfile).catch(() => setProfile(null));
+        // On failure (e.g. offline), keep whatever profile is already in state
+        // rather than wiping it to null — a user who opens the app offline
+        // should still see their cached profile, not a blank one.
+        usersService.getMe().then(setProfile).catch(() => {});
       }
       setLoading(false);
     });
@@ -89,13 +93,28 @@ export function AuthProvider({ children }) {
       }
       setSession(s ?? null);
       if (s?.user) {
-        usersService.getMe().then(setProfile).catch(() => setProfile(null));
+        usersService.getMe().then(setProfile).catch(() => {});
       } else {
         setProfile(null);
       }
     });
 
-    return () => subscription.unsubscribe();
+    // Reconnect safety net: supabase-js's own auto-refresh timer already
+    // retries quietly on network failure without signing out (it only signs
+    // out on a confirmed-invalid refresh token), but a device that was
+    // offline past its access token's expiry won't get a timer tick until
+    // it's due — nudge a refresh attempt as soon as the browser reports
+    // connectivity again so the session is current by the time the user
+    // acts on it, not whenever the next scheduled tick happens to land.
+    const onReconnect = () => {
+      supabase.auth.getSession().catch(() => {});
+    };
+    window.addEventListener("online", onReconnect);
+
+    return () => {
+      subscription.unsubscribe();
+      window.removeEventListener("online", onReconnect);
+    };
   }, []);
 
   // ── register ─────────────────────────────────────────────────────────────
@@ -178,6 +197,14 @@ export function AuthProvider({ children }) {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
     // State is cleaned up by the onAuthStateChange listener above.
+
+    // Wipe the offline cache + outbox — don't leave another person's group
+    // data, payment history, or queued writes sitting in this browser after
+    // they sign out of it.
+    if (config.offlineEnabled) {
+      const { clearAllData } = await import("../offline/db");
+      await clearAllData().catch(() => {});
+    }
   }
 
   // ── updateProfile ─────────────────────────────────────────────────────────
