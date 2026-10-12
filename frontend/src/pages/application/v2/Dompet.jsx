@@ -5,14 +5,13 @@ import { Users, Split, Wallet } from "../../../components/application/v2/icons";
 import ScreenHeader from "../../../components/application/v2/ScreenHeader";
 import WalletCard from "../../../components/application/v2/dompet/WalletCard";
 import PanelRow from "../../../components/application/v2/dompet/PanelRow";
-import { ARISAN_CARD, PATUNGAN_CARD, DOMPET_CARD } from "../../../components/application/v2/dompet/data";
 import { useDompet } from "../../../hooks/useDompet";
 
 export default function Dompet() {
   const navigate = useNavigate();
   const [open, setOpen] = useState({ arisan: true, patungan: false, dompet: false });
 
-  // Live wallet data — falls back to static ARISAN_CARD / PATUNGAN_CARD / DOMPET_CARD on error.
+  // Mockup cards in demo mode; live data (or blank cards) in real mode.
   const {
     arisanCard, patunganCard, dompetCard,
     arisanRows, patunganRows, dompetRows,
@@ -37,10 +36,10 @@ export default function Dompet() {
           </div>
         )}
 
-        {/* Error banner — static fallback data is still shown */}
+        {/* Error banner — live data failed to load */}
         {error && !loading && (
           <div className="mx-5 mt-3 mb-1 rounded-lg bg-yellow-50 border border-yellow-200 px-3.5 py-2.5 text-[12px] text-yellow-800">
-            Data langsung tidak tersedia — menampilkan data contoh.
+            Gagal memuat data. Cek koneksi kamu, lalu coba lagi.
           </div>
         )}
 
@@ -77,8 +76,8 @@ export default function Dompet() {
                 <PanelRow
                   icon={<Users size={18} stroke="var(--emerald-dark)" strokeWidth={2} />}
                   iconClass="em"
-                  name={ARISAN_CARD.stats[1]?.sub ?? "Grup Arisan"}
-                  meta="Bergabung lewat undangan untuk melihat detail"
+                  name="Belum ada grup arisan"
+                  meta="Bikin grup baru atau gabung lewat undangan"
                   fillClass="em"
                   fillWidth="0%"
                   amount="—"

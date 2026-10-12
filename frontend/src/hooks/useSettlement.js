@@ -3,6 +3,7 @@ import { billSettlementsService, paymentsService } from '../services';
 import { config } from '../config';
 import { supabase } from '../lib/supabase';
 import { enqueueContribution } from '../offline/writes';
+import { isDemoMode } from '../lib/appMode';
 
 /**
  * useSettlement — wraps settlement / payment submission for BuktiTransfer.
@@ -36,8 +37,9 @@ export function useSettlement() {
       // Offline-first path: always queue through the outbox (even while
       // online) so the UI gets one consistent pending→synced→failed state
       // for every contribution, and a flaky connection never blocks the
-      // user from recording "I paid" locally first.
-      if (config.offlineEnabled) {
+      // user from recording "I paid" locally first. Demo mode skips it: there's
+      // no session to drain the outbox, and the demo API answers directly.
+      if (config.offlineEnabled && !isDemoMode()) {
         const { data } = await supabase.auth.getSession();
         const payment = await enqueueContribution({
           userId: data?.session?.user?.id,

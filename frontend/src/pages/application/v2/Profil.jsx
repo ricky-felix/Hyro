@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import "../../../styles/app-v2.css";
 import { useToast } from "../../../context/ToastContext";
 import { useAuth } from "../../../context/AuthContext";
+import { isDemoMode } from "../../../lib/appMode";
+import { DEMO_USER } from "../../../lib/demoApi";
 import {
   UserSingle,
   Card,
@@ -21,14 +23,16 @@ import MenuSection from "../../../components/application/v2/profil/MenuSection";
 export default function Profil() {
   const navigate = useNavigate();
   const toast = useToast();
-  const { logout, profile, user } = useAuth();
+  const { logout, profile: authProfile, user } = useAuth();
+  // Demo mode has no session — show the demo persona instead of "Pengguna".
+  const profile = isDemoMode() ? DEMO_USER : authProfile;
 
   // All users are now authenticated — no anonymous branches.
   // Display name falls back to "Pengguna" if the DB profile hasn't loaded yet.
   const name = profile?.name?.trim() || "";
   const displayName = name || "Pengguna";
   // Show phone from profile if available, otherwise show email from auth user.
-  const displayPhone = profile?.phone || user?.email || "";
+  const displayPhone = profile?.phone || user?.email || profile?.email || "";
 
   const handleLogout = async () => {
     try {

@@ -1,5 +1,7 @@
 import { config } from '../config';
 import { supabase } from './supabase';
+import { isDemoMode } from './appMode';
+import { demoRequest } from './demoApi';
 
 /**
  * Base API client with authentication support
@@ -19,6 +21,12 @@ class ApiClient {
   }
 
   async request(endpoint, options = {}) {
+    // Demo mode (gate password) never touches the real backend.
+    if (isDemoMode()) {
+      const body = options.body ? JSON.parse(options.body) : undefined;
+      return demoRequest(options.method ?? 'GET', endpoint, body);
+    }
+
     const headers = await this.getAuthHeaders();
     const url = `${this.baseUrl}${endpoint}`;
 

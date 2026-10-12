@@ -5,7 +5,7 @@
  * the hook, and verifies loading/success/error/fallback behavior.
  */
 
-// Mock the home/data module to control the fallback value
+// Mock the home/data module to control the demo-mode mockup
 vi.mock('../components/application/v2/home/data', () => ({
   ALL_CARDS: [{ id: 'fallback', type: 'arisan' }],
 }));
@@ -19,10 +19,12 @@ vi.mock('../config', () => ({ config: { offlineEnabled: true } }));
 vi.mock('../offline/cache', () => ({
   getCachedGroups: vi.fn(),
 }));
+vi.mock('../lib/appMode', () => ({ isDemoMode: vi.fn(() => false) }));
 
 import { renderHook, waitFor } from '@testing-library/react';
 import { groupsService, billsService } from '../services';
 import { getCachedGroups } from '../offline/cache';
+import { isDemoMode } from '../lib/appMode';
 import { useHomeCards } from './useGroups';
 
 beforeEach(() => {
@@ -30,22 +32,31 @@ beforeEach(() => {
   groupsService.list.mockResolvedValue([]);
   billsService.list.mockResolvedValue([]);
   getCachedGroups.mockResolvedValue([]);
+  isDemoMode.mockReturnValue(false);
 });
 
 describe('useHomeCards', () => {
-  it('starts in loading state with fallback ALL_CARDS', () => {
+  it('demo mode returns the ALL_CARDS mockup without touching the API', () => {
+    isDemoMode.mockReturnValue(true);
     const { result } = renderHook(() => useHomeCards());
-    expect(result.current.loading).toBe(true);
-    // initial cards come from ALL_CARDS
+    expect(result.current.loading).toBe(false);
     expect(result.current.cards).toEqual([{ id: 'fallback', type: 'arisan' }]);
+    expect(groupsService.list).not.toHaveBeenCalled();
+    expect(billsService.list).not.toHaveBeenCalled();
   });
 
-  it('resolves to empty fallback when API returns empty arrays', async () => {
+  it('real mode starts in loading state with no cards', () => {
+    const { result } = renderHook(() => useHomeCards());
+    expect(result.current.loading).toBe(true);
+    expect(result.current.cards).toEqual([]);
+  });
+
+  it('resolves to an empty deck when API returns empty arrays', async () => {
     const { result } = renderHook(() => useHomeCards());
     await waitFor(() => expect(result.current.loading).toBe(false));
 
-    // 0 groups + 0 bills → merged.length === 0 → fallback to ALL_CARDS
-    expect(result.current.cards).toEqual([{ id: 'fallback', type: 'arisan' }]);
+    // 0 groups + 0 bills → empty deck (HomeDeck shows EmptyCard), never mockups
+    expect(result.current.cards).toEqual([]);
     expect(result.current.error).toBeNull();
   });
 
@@ -192,7 +203,7 @@ describe('useHomeCards', () => {
     expect(result.current.cards[1].id).toBe('settled');
   });
 
-  it('falls back to ALL_CARDS on API error', async () => {
+  it('falls back to an empty deck on API error with nothing cached', async () => {
     groupsService.list.mockRejectedValue(new Error('Server error'));
     billsService.list.mockRejectedValue(new Error('Server error'));
 
@@ -200,7 +211,7 @@ describe('useHomeCards', () => {
     await waitFor(() => expect(result.current.loading).toBe(false));
 
     expect(result.current.error).toBe('Server error');
-    expect(result.current.cards).toEqual([{ id: 'fallback', type: 'arisan' }]);
+    expect(result.current.cards).toEqual([]);
   });
 
   it('falls back to the offline cache on API error when groups are cached', async () => {

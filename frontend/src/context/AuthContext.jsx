@@ -47,6 +47,7 @@ import { supabase } from "../lib/supabase";
 import { usersService } from "../services/users.service";
 import { parseIdentifier } from "../utils/identifier";
 import { config } from "../config";
+import { clearAppMode } from "../lib/appMode";
 
 const AuthContext = createContext(null);
 
@@ -194,6 +195,8 @@ export function AuthProvider({ children }) {
    * Sign out and clear local session. Does NOT re-create an anonymous session.
    */
   async function logout() {
+    // Back to the gate: the next visit to /masuk picks demo or real again.
+    clearAppMode();
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
     // State is cleaned up by the onAuthStateChange listener above.

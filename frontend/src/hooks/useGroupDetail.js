@@ -4,6 +4,7 @@ import { GROUP, STATS, PROGRESS, RECIPIENT, GILIRAN } from '../components/applic
 import { MEMBERS } from '../components/application/v2/members/data';
 import { config } from '../config';
 import { getCachedGroups, getCachedGroupDetail } from '../offline/cache';
+import { isDemoMode } from '../lib/appMode';
 
 /**
  * Maps a group member (backend) → the shape MemberStatusList / MembersOrbit expect.
@@ -143,21 +144,27 @@ async function loadFromCache(groupId) {
 
 /**
  * useGroupDetail — fetches group metadata, members, current round, and payments.
- * Falls back to the offline cache, then static mock data, on error.
+ *
+ * Demo mode: the static grup/members mockups, no network.
+ * Real mode: live data, falling back to the offline cache on error. If
+ * neither has the group, `group` stays null and the page shows an empty
+ * state — never mockups.
  *
  * @param {string|null} groupId – if null, uses the first group returned by the API.
  */
 export function useGroupDetail(groupId = null) {
-  const [group, setGroup] = useState(GROUP);
-  const [stats, setStats] = useState(STATS);
-  const [progress, setProgress] = useState(PROGRESS);
-  const [recipient, setRecipient] = useState(RECIPIENT);
-  const [giliran, setGiliran] = useState(GILIRAN);
-  const [members, setMembers] = useState(MEMBERS);
-  const [loading, setLoading] = useState(true);
+  const demo = isDemoMode();
+  const [group, setGroup] = useState(demo ? GROUP : null);
+  const [stats, setStats] = useState(demo ? STATS : []);
+  const [progress, setProgress] = useState(demo ? PROGRESS : null);
+  const [recipient, setRecipient] = useState(demo ? RECIPIENT : null);
+  const [giliran, setGiliran] = useState(demo ? GILIRAN : []);
+  const [members, setMembers] = useState(demo ? MEMBERS : []);
+  const [loading, setLoading] = useState(!demo);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (demo) return undefined;
     let cancelled = false;
 
     function applyState(derived) {
@@ -183,7 +190,7 @@ export function useGroupDetail(groupId = null) {
         }
 
         if (!targetId) {
-          // User has no groups yet — stay on static fallback
+          // User has no groups yet — `group` stays null (page shows empty state)
           if (!cancelled) setLoading(false);
           return;
         }
@@ -224,7 +231,7 @@ export function useGroupDetail(groupId = null) {
             console.error('[useGroupDetail] cache fallback failed:', cacheErr.message);
           }
         }
-        // Otherwise keep the static fallback already set as initial state
+        // Otherwise `group` stays null — the page shows its error/empty state.
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -232,7 +239,7 @@ export function useGroupDetail(groupId = null) {
 
     load();
     return () => { cancelled = true; };
-  }, [groupId]);
+  }, [groupId, demo]);
 
   return { group, stats, progress, recipient, giliran, members, loading, error };
 }

@@ -3,6 +3,7 @@ import { notificationsService } from '../services';
 import { config } from '../config';
 import { getCachedNotifications } from '../offline/cache';
 import { supabase } from '../lib/supabase';
+import { isDemoMode } from '../lib/appMode';
 
 /**
  * useNotifications — loads notifications + unread count from the API.
@@ -15,19 +16,21 @@ import { supabase } from '../lib/supabase';
  * bubble layout, plus helpers it needs.
  */
 export function useNotifications() {
+  // Demo mode: Notifikasi renders its static mockup, so there's nothing to load.
+  const demo = isDemoMode();
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!demo);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (demo) return undefined;
     let cancelled = false;
 
     async function load() {
       setLoading(true);
       setError(null);
       try {
-        // TODO(wave2-auth): relies on anonymous Supabase session token being present.
         const [list, countRes] = await Promise.all([
           notificationsService.list(),
           notificationsService.getUnreadCount(),
@@ -56,7 +59,7 @@ export function useNotifications() {
             console.error('[useNotifications] cache fallback failed:', cacheErr.message);
           }
         }
-        // Otherwise keep empty arrays — the screen shows its static JSX as fallback
+        // Otherwise keep empty arrays — the screen shows its empty/error state.
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -64,7 +67,7 @@ export function useNotifications() {
 
     load();
     return () => { cancelled = true; };
-  }, []);
+  }, [demo]);
 
   const markRead = useCallback(async (id) => {
     // Optimistic update

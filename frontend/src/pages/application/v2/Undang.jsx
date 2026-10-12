@@ -8,6 +8,22 @@ import { Share, Send, Check, Users, Split } from "../../../components/applicatio
 import ScreenHeader from "../../../components/application/v2/ScreenHeader";
 import FauxQr from "../../../components/application/v2/undang/FauxQr";
 import { INVITE } from "../../../components/application/v2/undang/data";
+import { isDemoMode } from "../../../lib/appMode";
+
+// Real-mode placeholder while the group loads (or if it can't): labels only,
+// no made-up names, members, or link.
+const EMPTY_INVITE = {
+  group: {
+    name: "Grup kamu",
+    type: "arisan",
+    typeLabel: "Arisan",
+    members: 0,
+    capacity: "—",
+    admin: "—",
+  },
+  joined: [],
+  pending: 0,
+};
 
 /**
  * Undang — the group owner's "share invite link" screen.
@@ -24,19 +40,20 @@ import { INVITE } from "../../../components/application/v2/undang/data";
 export default function Undang() {
   const navigate = useNavigate();
   const toast = useToast();
-  // Route may include /app/undang/:groupId — fall back to INVITE static data.
+  // Route may include /app/undang/:groupId. Demo mode shows the INVITE mockup;
+  // real mode shows live data only.
   const { id: groupId } = useParams();
+  const demo = isDemoMode();
 
   // Live group metadata and members
   const [liveGroup, setLiveGroup] = useState(null);
   const [liveJoined, setLiveJoined] = useState(null);
 
   useEffect(() => {
-    if (!groupId) return;
+    if (!groupId || demo) return;
     let cancelled = false;
     async function load() {
       try {
-        // TODO(wave2-auth): Supabase session token required.
         const [groupData, membersData] = await Promise.all([
           groupsService.getById(groupId),
           groupMembersService.list(groupId),
@@ -46,26 +63,25 @@ export default function Undang() {
         setLiveJoined(Array.isArray(membersData) ? membersData : null);
       } catch (err) {
         console.error('[Undang] failed to load group:', err.message);
-        // Keep static INVITE data as fallback
+        // Keep the placeholder group (mockup in demo, blank in real mode)
       }
     }
     load();
     return () => { cancelled = true; };
-  }, [groupId]);
+  }, [groupId, demo]);
 
   // Create/refresh the invite link for this group
   const { invite, createInvite } = useInvite(groupId ?? null);
 
   useEffect(() => {
-    if (groupId) {
-      // TODO(wave2-auth): Supabase session token required.
+    if (groupId && !demo) {
       createInvite().catch(() => {});
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [groupId]);
+  }, [groupId, demo]);
 
-  // Merge live data with static fallback
-  const staticInvite = INVITE;
+  // Merge live data with the placeholder (mockup in demo, blank in real mode)
+  const staticInvite = demo ? INVITE : EMPTY_INVITE;
   const group = liveGroup
     ? {
         name: liveGroup.name,
@@ -94,13 +110,18 @@ export default function Undang() {
 
   const pending = liveJoined ? 0 : staticInvite.pending;
 
-  // Invite link: use live invite code if available, else static fallback
-  const link = invite?.link ?? staticInvite.link;
+  // Invite link. The backend returns a `token` (no URL), so build a link to the
+  // join preview — ProtectedRoute keeps it as returnTo through login.
+  // Demo mode shows the mockup link.
+  const fullLink = demo
+    ? `https://${INVITE.link}`
+    : invite?.token
+    ? `${window.location.origin}/app/gabung/preview?token=${encodeURIComponent(invite.token)}`
+    : null;
+  const link = fullLink ? fullLink.replace(/^https?:\/\//, "") : "Lagi bikin tautan…";
 
   const isArisan = group.type === "arisan";
   const [copied, setCopied] = useState(false);
-
-  const fullLink = `https://${link}`;
 
   // Gradient values for the group icon tile — differ by group type.
   // Kept as inline style because Tailwind can't express arbitrary two-stop
@@ -120,6 +141,10 @@ export default function Undang() {
   const copyCls = isArisan ? "bg-brand-primary" : "bg-brand-secondary-dark";
 
   function copyLink() {
+    if (!fullLink) {
+      toast("Tautan undangan belum siap — tunggu sebentar", "error");
+      return;
+    }
     if (navigator.clipboard?.writeText) {
       navigator.clipboard.writeText(fullLink).catch(() => {});
     }
@@ -129,6 +154,10 @@ export default function Undang() {
   }
 
   function shareWa() {
+    if (!fullLink) {
+      toast("Tautan undangan belum siap — tunggu sebentar", "error");
+      return;
+    }
     const text = encodeURIComponent(
       `Yuk gabung ${group.typeLabel} "${group.name}" di Hyro: ${fullLink}`
     );

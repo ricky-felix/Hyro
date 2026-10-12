@@ -1,6 +1,21 @@
 import { useState, useEffect } from 'react';
 import { groupsService, billsService } from '../services';
 import { ARISAN_CARD, PATUNGAN_CARD, DOMPET_CARD } from '../components/application/v2/dompet/data';
+import { isDemoMode } from '../lib/appMode';
+
+// Real-mode starting point: the mockup cards' labels with every figure blanked,
+// so a new or offline account never shows made-up totals.
+function blankCard(card, desc) {
+  return {
+    ...card,
+    desc,
+    stats: card.stats.map(st => ({ ...st, val: '—', sub: '' })),
+    due: { ...card.due, text: 'Belum ada jatuh tempo', amount: '—' },
+  };
+}
+const EMPTY_ARISAN_CARD = blankCard(ARISAN_CARD, 'Belum ada grup arisan');
+const EMPTY_PATUNGAN_CARD = blankCard(PATUNGAN_CARD, 'Belum ada tagihan patungan');
+const EMPTY_DOMPET_CARD = blankCard(DOMPET_CARD, 'Belum ada iuran terkumpul');
 
 /**
  * useDompet — fetches groups, bills and payment data to populate the Dompet screen.
@@ -17,27 +32,29 @@ import { ARISAN_CARD, PATUNGAN_CARD, DOMPET_CARD } from '../components/applicati
  * TODO(wave2-plans): once /plans and /subscriptions/me are added to the backend,
  * replace the derivation below with direct calls to those endpoints.
  *
- * Falls back to static ARISAN_CARD / PATUNGAN_CARD / DOMPET_CARD data on error.
+ * Demo mode: the static ARISAN_CARD / PATUNGAN_CARD / DOMPET_CARD mockups.
+ * Real mode: live data only — blank cards when empty or on error.
  */
 export function useDompet() {
-  const [arisanCard, setArisanCard] = useState(ARISAN_CARD);
-  const [patunganCard, setPatunganCard] = useState(PATUNGAN_CARD);
-  const [dompetCard, setDompetCard] = useState(DOMPET_CARD);
+  const demo = isDemoMode();
+  const [arisanCard, setArisanCard] = useState(demo ? ARISAN_CARD : EMPTY_ARISAN_CARD);
+  const [patunganCard, setPatunganCard] = useState(demo ? PATUNGAN_CARD : EMPTY_PATUNGAN_CARD);
+  const [dompetCard, setDompetCard] = useState(demo ? DOMPET_CARD : EMPTY_DOMPET_CARD);
   // Detailed rows for each accordion panel
   const [arisanRows, setArisanRows] = useState([]);
   const [patunganRows, setPatunganRows] = useState([]);
   const [dompetRows, setDompetRows] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!demo);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (demo) return undefined;
     let cancelled = false;
 
     async function load() {
       setLoading(true);
       setError(null);
       try {
-        // TODO(wave2-auth): Supabase anonymous session token injected by ApiClient.
         const [groups, bills] = await Promise.all([
           groupsService.list(),
           billsService.list(),
@@ -76,7 +93,7 @@ export function useDompet() {
             due: nextDueDate ? {
               text: `Jatuh tempo ${nextDueDate} · ${nextGroup.name}`,
               amount: `Rp ${Number(nextGroup.contribution_amount).toLocaleString('id-ID')}`,
-            } : ARISAN_CARD.due,
+            } : EMPTY_ARISAN_CARD.due,
           });
 
           // Rows for each arisan group
@@ -120,7 +137,7 @@ export function useDompet() {
               dotClass: 'orange',
               text: `${urgentBill.title} — ${(urgentBill.participant_count ?? 0) - (urgentBill.settled_count ?? 0)} orang belum bayar`,
               amount: `Rp ${Number(urgentBill.total_amount).toLocaleString('id-ID')}`,
-            } : PATUNGAN_CARD.due,
+            } : EMPTY_PATUNGAN_CARD.due,
           });
 
           setPatunganRows(billList.map(b => {
@@ -199,9 +216,9 @@ export function useDompet() {
         }
       } catch (err) {
         if (cancelled) return;
-        console.error('[useDompet] failed to load, using static fallback:', err.message);
+        console.error('[useDompet] failed to load:', err.message);
         setError(err.message);
-        // Static defaults remain from useState initialization
+        // Blank cards remain from useState initialization
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -209,7 +226,7 @@ export function useDompet() {
 
     load();
     return () => { cancelled = true; };
-  }, []);
+  }, [demo]);
 
   return {
     arisanCard, patunganCard, dompetCard,

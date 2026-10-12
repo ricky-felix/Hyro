@@ -6,6 +6,17 @@ import { useJoinGroup } from "../../../hooks/useInvite";
 import { Camera, Upload, Link, QrJoin, X, Check } from "../../../components/application/v2/icons";
 import ScreenHeader from "../../../components/application/v2/ScreenHeader";
 import { INVITE } from "../../../components/application/v2/undang/data";
+import { isDemoMode } from "../../../lib/appMode";
+
+// Pull the invite token out of whatever the user pasted: a full join link
+// (…/app/gabung/preview?token=ABC), an older path-style link (…/gabung/ABC),
+// or a bare code.
+function extractToken(raw) {
+  const v = raw.trim();
+  const fromQuery = v.match(/[?&]token=([^&#]+)/);
+  if (fromQuery) return decodeURIComponent(fromQuery[1]);
+  return v.includes("/") ? v.split("/").filter(Boolean).pop() : v;
+}
 
 /**
  * GabungMasuk — the in-app "how do you want to join?" entry screen.
@@ -97,11 +108,14 @@ export default function GabungMasuk() {
   function onUpload(e) {
     const file = e.target.files?.[0];
     if (!file) return;
-    // TODO: QR *decoding* of the uploaded image is mocked for MVP — a real
-    // QR decode library (e.g. jsQR) would extract the token here.
-    // The decoded token below is a placeholder; the redeem call in Gabung.jsx
-    // uses the static INVITE.code until a real decoder is in place.
-    const mockDecodedToken = INVITE.code; // TODO(wave2-qr-decode): replace with real decode
+    // TODO(wave2-qr-decode): QR *decoding* is mocked — a real decoder (e.g.
+    // jsQR) would extract the token here. Only demo mode fakes a result;
+    // real mode must not redeem a made-up code.
+    if (!isDemoMode()) {
+      toast("Scan QR belum tersedia — tempel link undangannya di bawah", "error");
+      return;
+    }
+    const mockDecodedToken = INVITE.code;
     toast("QR terbaca ✓");
     setTimeout(() => goToPreview(mockDecodedToken), 400);
   }
@@ -112,9 +126,7 @@ export default function GabungMasuk() {
       toast("Tempel link atau masukkan kode undangan dulu");
       return;
     }
-    // Extract the invite code from a full link (e.g. arisan.digital/gabung/ABC123 → ABC123)
-    // or use the raw value if it looks like a bare code.
-    const code = v.includes("/") ? v.split("/").pop() : v;
+    const code = extractToken(v);
 
     // Validate the code against the real API before navigating
     // TODO(wave2-auth): requires a valid Supabase session.
@@ -170,10 +182,14 @@ export default function GabungMasuk() {
                   type="button"
                   className="flex-1 border-none cursor-pointer inline-flex items-center justify-center gap-1.75 text-[14px] font-extrabold py-3.25 rounded-lg bg-white text-brand-primary-hover"
                   onClick={() => {
-                    // TODO: QR *decoding* from the live camera stream is mocked for MVP.
-                    // A real decoder (jsQR / zxing-wasm) would read videoRef frames here.
-                    const mockToken = INVITE.code; // TODO(wave2-qr-decode): replace with real decode
-                    goToPreview(mockToken);
+                    // TODO(wave2-qr-decode): decoding the camera stream is mocked —
+                    // a real decoder (jsQR / zxing-wasm) would read videoRef frames.
+                    // Only demo mode fakes a result.
+                    if (!isDemoMode()) {
+                      toast("Scan QR belum tersedia — tempel link undangannya di bawah", "error");
+                      return;
+                    }
+                    goToPreview(INVITE.code);
                   }}
                 >
                   <Check size={16} stroke="currentColor" strokeWidth={3} />
@@ -236,7 +252,7 @@ export default function GabungMasuk() {
               <Link size={16} stroke="var(--ink-3)" strokeWidth={2} />
               <input
                 className="flex-1 min-w-0 border-none outline-none bg-transparent py-3.5 text-[15px] font-[inherit] text-ink-1"
-                placeholder={INVITE.link}
+                placeholder={isDemoMode() ? INVITE.link : "Tempel link atau kode undangan"}
                 value={value}
                 onChange={e => setValue(e.target.value)}
                 onKeyDown={e => e.key === "Enter" && submitLink()}

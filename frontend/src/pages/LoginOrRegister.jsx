@@ -24,20 +24,31 @@ import { useState } from "react";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { parseIdentifier } from "../utils/identifier";
+import { getAppMode, setAppMode, MODE_DEMO, MODE_REAL } from "../lib/appMode";
 import { InputField } from "../components/auth/InputField";
 
 // ─── TEMPORARY PASSWORD GATE ──────────────────────────────────────────────────
 // Gates the whole /masuk page behind a shared passphrase during pre-launch.
 // This is client-side only — NOT real security, just a soft barrier.
 // To remove: delete this block + the <PasswordGate> wrapper at the bottom.
-const GATE_PASSWORD = import.meta.env.VITE_GATE_PASSWORD || "arisan-patungan-2026";
-const GATE_STORAGE_KEY = "masuk_gate_unlocked";
+//
+// Two passwords, two modes (see lib/appMode.js):
+//   - demo password → skip login, straight into /app on mockup data
+//   - real password → unlock the normal login form, live data only
+// Production builds default the real password to "real_data_hyro"; in dev it
+// has no default, so only the demo path exists unless VITE_GATE_PASSWORD_REAL
+// is set.
+const GATE_PASSWORD_DEMO =
+  import.meta.env.VITE_GATE_PASSWORD_DEMO ||
+  import.meta.env.VITE_GATE_PASSWORD ||
+  "arisan-patungan-2026";
+const GATE_PASSWORD_REAL =
+  import.meta.env.VITE_GATE_PASSWORD_REAL ||
+  (import.meta.env.PROD ? "real_data_hyro" : "");
 
 function PasswordGate({ children }) {
   const navigate = useNavigate();
-  const [unlocked, setUnlocked] = useState(
-    () => sessionStorage.getItem(GATE_STORAGE_KEY) === "1"
-  );
+  const [unlocked, setUnlocked] = useState(() => getAppMode() === MODE_REAL);
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
 
@@ -45,10 +56,12 @@ function PasswordGate({ children }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (input === GATE_PASSWORD) {
-      sessionStorage.setItem(GATE_STORAGE_KEY, "1");
-      setUnlocked(true);
+    if (input === GATE_PASSWORD_DEMO) {
+      setAppMode(MODE_DEMO);
       navigate("/app");
+    } else if (GATE_PASSWORD_REAL && input === GATE_PASSWORD_REAL) {
+      setAppMode(MODE_REAL);
+      setUnlocked(true);
     } else {
       setError("Kata sandi salah.");
     }

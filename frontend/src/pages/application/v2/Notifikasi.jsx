@@ -11,6 +11,8 @@ import NotifBubble    from "../../../components/application/v2/notifikasi/NotifB
 import GroupLabel     from "../../../components/application/v2/notifikasi/GroupLabel";
 import ReminderButton from "../../../components/application/v2/notifikasi/ReminderButton";
 import SuggestBar     from "../../../components/application/v2/notifikasi/SuggestBar";
+import LiveNotifList  from "../../../components/application/v2/notifikasi/LiveNotifList";
+import { isDemoMode } from "../../../lib/appMode";
 
 // Renders the correct 8×8 icon for an arisan/patungan tag badge.
 const TagIcon = ({ type }) =>
@@ -31,12 +33,21 @@ export default function Notifikasi() {
   const [sentReminders, setSentReminders] = useState({});
   const [paidBtns, setPaidBtns] = useState({});
 
-  // Live notifications — used to drive unread dot / mark-read actions.
-  // The static bubble JSX below remains as the visual shell (Workstream D
-  // does not redesign the screen). markAllRead is wired to the SuggestBar.
-  // TODO(wave2-notif): replace static bubbles with dynamically rendered
-  // notification list once the notification type/metadata schema is finalised.
-  const { markAllRead } = useNotifications();
+  // Demo mode renders the static mockup bubbles below; real mode renders the
+  // live list from GET /notifications (useNotifications skips the network in
+  // demo — the demo API client answers nothing for it).
+  const demo = isDemoMode();
+  const {
+    notifications, loading: notifLoading, error: notifError, markRead, markAllRead,
+  } = useNotifications();
+
+  function openNotification(n) {
+    if (!n.is_read) markRead(n.id);
+    // Only arisan has a v2 detail screen; bill detail is still the frozen v1
+    // mock page, so patungan notifications just get marked read.
+    const groupId = n.metadata?.group_id;
+    if (groupId) navigate(`/app/grup/${groupId}`);
+  }
 
   function openPaySheet() {
     setPaySheet({ open: true });
@@ -113,168 +124,181 @@ export default function Notifikasi() {
           </div>
         </div>
 
-        {/* ── Hari ini ── */}
-        <GroupLabel icon={<Clock size={10} strokeWidth={2.5} />}>Hari ini</GroupLabel>
+        {demo ? (
+          // Demo mode: the static mockup conversation.
+          <>
+          {/* ── Hari ini ── */}
+          <GroupLabel icon={<Clock size={10} strokeWidth={2.5} />}>Hari ini</GroupLabel>
 
-        <div className="convo-wrap">
-          {/* LEFT — Budi sudah bayar */}
-          <NotifBubble side="incoming" avatar="BS">
-            <div className="bub-card arisan unread">
-              <div className="bub-tag arisan">
-                <TagIcon type="arisan" />
-                Arisan · Keluarga Sari
+          <div className="convo-wrap">
+            {/* LEFT — Budi sudah bayar */}
+            <NotifBubble side="incoming" avatar="BS">
+              <div className="bub-card arisan unread">
+                <div className="bub-tag arisan">
+                  <TagIcon type="arisan" />
+                  Arisan · Keluarga Sari
+                </div>
+                <div className="bub-text">
+                  <strong>Budi Setiawan</strong> sudah bayar iuran{" "}
+                  <span className="check">Rp 200.000</span>. Dia dapat giliran putaran ke-6.
+                </div>
+                <div className="bub-actions">
+                  <button type="button" className="ba-btn ghost" onClick={() => navigate("/app/anggota")}>
+                    Lihat
+                  </button>
+                </div>
+                <div className="bub-time">09:23 · barusan</div>
               </div>
-              <div className="bub-text">
-                <strong>Budi Setiawan</strong> sudah bayar iuran{" "}
-                <span className="check">Rp 200.000</span>. Dia dapat giliran putaran ke-6.
-              </div>
-              <div className="bub-actions">
-                <button type="button" className="ba-btn ghost" onClick={() => navigate("/app/anggota")}>
-                  Lihat
-                </button>
-              </div>
-              <div className="bub-time">09:23 · barusan</div>
-            </div>
-          </NotifBubble>
+            </NotifBubble>
 
-          {/* RIGHT — Iuran jatuh tempo */}
-          <NotifBubble side="outgoing">
-            <div className="bub-card arisan unread">
-              <div className="bub-tag arisan">
-                <TagIcon type="arisan" />
-                Arisan · Keluarga Sari
+            {/* RIGHT — Iuran jatuh tempo */}
+            <NotifBubble side="outgoing">
+              <div className="bub-card arisan unread">
+                <div className="bub-tag arisan">
+                  <TagIcon type="arisan" />
+                  Arisan · Keluarga Sari
+                </div>
+                <div className="bub-text">
+                  Iuran <strong>Arisan Keluarga Sari</strong> jatuh tempo{" "}
+                  <strong>2 hari lagi</strong>.
+                  <span className="bub-amount em">Rp 200.000</span>
+                  Budi sedang menunggu giliran.
+                </div>
+                <div className="bub-actions">
+                  <ReminderButton
+                    sent={paidBtns.bayarNotif}
+                    onClick={openPaySheet}
+                    idleLabel="Bayar Sekarang"
+                    sentLabel="Lunas"
+                    variant="em"
+                  />
+                </div>
+                <div className="bub-time">08:00 · pengingat otomatis</div>
               </div>
-              <div className="bub-text">
-                Iuran <strong>Arisan Keluarga Sari</strong> jatuh tempo{" "}
-                <strong>2 hari lagi</strong>.
-                <span className="bub-amount em">Rp 200.000</span>
-                Budi sedang menunggu giliran.
-              </div>
-              <div className="bub-actions">
-                <ReminderButton
-                  sent={paidBtns.bayarNotif}
-                  onClick={openPaySheet}
-                  idleLabel="Bayar Sekarang"
-                  sentLabel="Lunas"
-                  variant="em"
-                />
-              </div>
-              <div className="bub-time">08:00 · pengingat otomatis</div>
-            </div>
-          </NotifBubble>
+            </NotifBubble>
 
-          {/* LEFT — Rina sudah transfer */}
-          <NotifBubble side="incoming" avatar="RA">
-            <div className="bub-card patungan">
-              <div className="bub-tag patungan">
-                <TagIcon type="patungan" />
-                Patungan · Makan Bali
+            {/* LEFT — Rina sudah transfer */}
+            <NotifBubble side="incoming" avatar="RA">
+              <div className="bub-card patungan">
+                <div className="bub-tag patungan">
+                  <TagIcon type="patungan" />
+                  Patungan · Makan Bali
+                </div>
+                <div className="bub-text">
+                  <strong>Rina Amalia</strong> sudah transfer{" "}
+                  <span className="check">Rp 90.000</span> untuk Makan Bali.
+                </div>
+                <div className="bub-time">08:47</div>
               </div>
-              <div className="bub-text">
-                <strong>Rina Amalia</strong> sudah transfer{" "}
-                <span className="check">Rp 90.000</span> untuk Makan Bali.
-              </div>
-              <div className="bub-time">08:47</div>
-            </div>
-          </NotifBubble>
+            </NotifBubble>
 
-          {/* RIGHT — Sari belum bayar */}
-          <NotifBubble side="outgoing">
-            <div className="bub-card patungan unread-lv">
-              <div className="bub-tag patungan">
-                <TagIcon type="patungan" />
-                Patungan · Makan Bali
+            {/* RIGHT — Sari belum bayar */}
+            <NotifBubble side="outgoing">
+              <div className="bub-card patungan unread-lv">
+                <div className="bub-tag patungan">
+                  <TagIcon type="patungan" />
+                  Patungan · Makan Bali
+                </div>
+                <div className="bub-text">
+                  <strong>Sari Indah</strong> belum bayar patungan Makan Bali.
+                  <span className="bub-amount lv">Rp 90.000 belum masuk</span>
+                </div>
+                <div className="bub-actions">
+                  <ReminderButton
+                    sent={sentReminders.ingatkanSari}
+                    onClick={() => fireReminder("ingatkanSari", "Pengingat terkirim ke Sari")}
+                    idleLabel="Ingatkan"
+                    sentLabel="Terkirim"
+                    variant="lv"
+                  />
+                </div>
+                <div className="bub-time">08:15</div>
               </div>
-              <div className="bub-text">
-                <strong>Sari Indah</strong> belum bayar patungan Makan Bali.
-                <span className="bub-amount lv">Rp 90.000 belum masuk</span>
-              </div>
-              <div className="bub-actions">
-                <ReminderButton
-                  sent={sentReminders.ingatkanSari}
-                  onClick={() => fireReminder("ingatkanSari", "Pengingat terkirim ke Sari")}
-                  idleLabel="Ingatkan"
-                  sentLabel="Terkirim"
-                  variant="lv"
-                />
-              </div>
-              <div className="bub-time">08:15</div>
-            </div>
-          </NotifBubble>
-        </div>
-
-        {/* ── Kemarin ── */}
-        <GroupLabel spaced>Kemarin</GroupLabel>
-
-        <div className="convo-wrap">
-          {/* LEFT — Dian bayar via GoPay */}
-          <NotifBubble side="incoming" avatar="DK">
-            <div className="bub-card arisan">
-              <div className="bub-tag arisan">Arisan · Keluarga Sari</div>
-              <div className="bub-text">
-                <strong>Dian Kusuma</strong> bayar via GoPay{" "}
-                <span className="check">Rp 200.000</span>. Total 8 dari 12 sudah lunas.
-              </div>
-              <div className="bub-time">Kemarin, 18:05</div>
-            </div>
-          </NotifBubble>
-
-          {/* RIGHT — 3 orang belum bayar Hotel Bromo */}
-          <NotifBubble side="outgoing">
-            <div className="bub-card patungan">
-              <div className="bub-tag patungan">Patungan · Hotel Bromo</div>
-              <div className="bub-text">
-                <strong>3 orang</strong> belum bayar Hotel Bromo.
-                <span className="bub-amount lv">Rp 900.000 belum masuk</span>
-              </div>
-              <div className="bub-actions">
-                <ReminderButton
-                  sent={sentReminders.tagihBromo}
-                  onClick={() => fireReminder("tagihBromo", "Tagihan dikirim ke 3 orang")}
-                  idleLabel="Tagih Sisanya"
-                  sentLabel="Terkirim"
-                  variant="lv"
-                />
-              </div>
-              <div className="bub-time">Kemarin, 17:50</div>
-            </div>
-          </NotifBubble>
-
-          {/* LEFT — Tiket Konser selesai */}
-          <NotifBubble
-            side="incoming"
-            avatar={<Check size={14} stroke="var(--emerald-dark)" strokeWidth={2.5} />}
-          >
-            <div className="bub-card patungan">
-              <div className="bub-tag patungan">Patungan · Tiket Konser</div>
-              <div className="bub-text">
-                Tiket Konser sudah lunas — semua sudah bayar.{" "}
-                <span className="check">4/4 orang selesai</span>.
-              </div>
-              <div className="bub-time">Kemarin, 14:22</div>
-            </div>
-          </NotifBubble>
-        </div>
-
-        {/* ── Minggu ini ── */}
-        <GroupLabel spaced>Minggu ini</GroupLabel>
-
-        <div className="convo-wrap">
-          {/* LEFT — Anggi bergabung */}
-          <NotifBubble side="incoming" avatar="AN">
-            <div className="bub-card arisan">
-              <div className="bub-tag arisan">Arisan · Kantor</div>
-              <div className="bub-text">
-                <strong>Anggi</strong> bergabung ke Arisan Kantor. Sekarang ada 8 anggota.
-              </div>
-              <div className="bub-time">Senin, 14:10</div>
-            </div>
-          </NotifBubble>
-
-          <div className="tail-bub">
-            <div className="tail-pill">Itu semua notifikasi terbaru</div>
+            </NotifBubble>
           </div>
-        </div>
+
+          {/* ── Kemarin ── */}
+          <GroupLabel spaced>Kemarin</GroupLabel>
+
+          <div className="convo-wrap">
+            {/* LEFT — Dian bayar via GoPay */}
+            <NotifBubble side="incoming" avatar="DK">
+              <div className="bub-card arisan">
+                <div className="bub-tag arisan">Arisan · Keluarga Sari</div>
+                <div className="bub-text">
+                  <strong>Dian Kusuma</strong> bayar via GoPay{" "}
+                  <span className="check">Rp 200.000</span>. Total 8 dari 12 sudah lunas.
+                </div>
+                <div className="bub-time">Kemarin, 18:05</div>
+              </div>
+            </NotifBubble>
+
+            {/* RIGHT — 3 orang belum bayar Hotel Bromo */}
+            <NotifBubble side="outgoing">
+              <div className="bub-card patungan">
+                <div className="bub-tag patungan">Patungan · Hotel Bromo</div>
+                <div className="bub-text">
+                  <strong>3 orang</strong> belum bayar Hotel Bromo.
+                  <span className="bub-amount lv">Rp 900.000 belum masuk</span>
+                </div>
+                <div className="bub-actions">
+                  <ReminderButton
+                    sent={sentReminders.tagihBromo}
+                    onClick={() => fireReminder("tagihBromo", "Tagihan dikirim ke 3 orang")}
+                    idleLabel="Tagih Sisanya"
+                    sentLabel="Terkirim"
+                    variant="lv"
+                  />
+                </div>
+                <div className="bub-time">Kemarin, 17:50</div>
+              </div>
+            </NotifBubble>
+
+            {/* LEFT — Tiket Konser selesai */}
+            <NotifBubble
+              side="incoming"
+              avatar={<Check size={14} stroke="var(--emerald-dark)" strokeWidth={2.5} />}
+            >
+              <div className="bub-card patungan">
+                <div className="bub-tag patungan">Patungan · Tiket Konser</div>
+                <div className="bub-text">
+                  Tiket Konser sudah lunas — semua sudah bayar.{" "}
+                  <span className="check">4/4 orang selesai</span>.
+                </div>
+                <div className="bub-time">Kemarin, 14:22</div>
+              </div>
+            </NotifBubble>
+          </div>
+
+          {/* ── Minggu ini ── */}
+          <GroupLabel spaced>Minggu ini</GroupLabel>
+
+          <div className="convo-wrap">
+            {/* LEFT — Anggi bergabung */}
+            <NotifBubble side="incoming" avatar="AN">
+              <div className="bub-card arisan">
+                <div className="bub-tag arisan">Arisan · Kantor</div>
+                <div className="bub-text">
+                  <strong>Anggi</strong> bergabung ke Arisan Kantor. Sekarang ada 8 anggota.
+                </div>
+                <div className="bub-time">Senin, 14:10</div>
+              </div>
+            </NotifBubble>
+
+            <div className="tail-bub">
+              <div className="tail-pill">Itu semua notifikasi terbaru</div>
+            </div>
+          </div>
+          </>
+        ) : (
+          // Real mode: live notifications only.
+          <LiveNotifList
+            notifications={notifications}
+            loading={notifLoading}
+            error={notifError}
+            onOpen={openNotification}
+          />
+        )}
 
         {/* Quick-reply chips */}
         <SuggestBar

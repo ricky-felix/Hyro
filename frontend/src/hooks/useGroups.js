@@ -3,6 +3,7 @@ import { groupsService, billsService } from '../services';
 import { ALL_CARDS } from '../components/application/v2/home/data';
 import { config } from '../config';
 import { getCachedGroups } from '../offline/cache';
+import { isDemoMode } from '../lib/appMode';
 
 /**
  * Maps a backend group object to the card shape expected by HomeDeck / StoryCard.
@@ -117,25 +118,25 @@ function mapBillToCard(bill) {
 
 /**
  * useHomeCards — loads groups + bills and maps them to HomeDeck card shape.
- * Falls back to static ALL_CARDS on error so the UI never goes blank.
+ *
+ * Demo mode: the static ALL_CARDS mockup, no network.
+ * Real mode: live data only. On failure, falls back to the offline cache,
+ * then to an empty deck (HomeDeck shows its EmptyCard) — never mockups.
  */
 export function useHomeCards() {
-  const [cards, setCards] = useState(ALL_CARDS);
-  const [loading, setLoading] = useState(true);
+  const demo = isDemoMode();
+  const [cards, setCards] = useState(demo ? ALL_CARDS : []);
+  const [loading, setLoading] = useState(!demo);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (demo) return undefined;
     let cancelled = false;
 
     async function load() {
       setLoading(true);
       setError(null);
       try {
-        // TODO(wave2-auth): anonymous session is bootstrapped by AuthProvider via
-        // supabase.auth.signInAnonymously(). The ApiClient reads the token from
-        // supabase.auth.getSession() — once AuthProvider finishes bootstrapping the
-        // token will be present. If the token is absent the backend returns 401 and
-        // we fall back to static data below.
         const [groups, bills] = await Promise.all([
           groupsService.list(),
           billsService.list(),
@@ -151,14 +152,14 @@ export function useHomeCards() {
         const settled = [...groupCards, ...billCards].filter(c => c.settled);
         const merged = [...active, ...settled];
 
-        setCards(merged.length > 0 ? merged : ALL_CARDS);
+        setCards(merged);
       } catch (err) {
         if (cancelled) return;
         console.error('[useHomeCards] failed to load:', err.message);
         setError(err.message);
 
         // Offline (or the request otherwise failed) — fall back to the local
-        // cache before giving up to the static mock data.
+        // cache before giving up to an empty deck.
         if (config.offlineEnabled) {
           try {
             const cachedGroups = await getCachedGroups();
@@ -172,7 +173,7 @@ export function useHomeCards() {
           }
         }
 
-        if (!cancelled) setCards(ALL_CARDS);
+        if (!cancelled) setCards([]);
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -180,7 +181,7 @@ export function useHomeCards() {
 
     load();
     return () => { cancelled = true; };
-  }, []);
+  }, [demo]);
 
   return { cards, loading, error };
 }

@@ -23,6 +23,32 @@ export default function GroupDetail() {
   const viewMembers = () => navigate("/app/anggota");
   const pay = () => toast(`Memproses pembayaran ${group.payAmount}…`);
 
+  // Real mode with no group to show (no groups yet, or it failed to load and
+  // isn't in the offline cache). Demo mode always has the mockup group.
+  if (!group) {
+    return (
+      <div className="v2-screen">
+        <div className="v2-inner overflow-y-auto">
+          <GroupHeader title="Grup" onBack={() => navigate(-1)} />
+          {loading ? (
+            <div className="w-full h-0.5 bg-line-soft overflow-hidden">
+              <div className="h-full w-1/2 bg-brand-primary animate-pulse" />
+            </div>
+          ) : (
+            <div className="mx-auto flex max-w-140 flex-col items-center gap-3 px-5 py-16 text-center">
+              <div className="text-4xl" aria-hidden="true">{error ? "📡" : "👥"}</div>
+              <div className="text-[15px] font-semibold text-ink-2">
+                {error
+                  ? "Gagal memuat grup. Cek koneksi kamu, lalu coba lagi."
+                  : "Kamu belum gabung grup arisan. Bikin grup baru atau gabung lewat undangan."}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="v2-screen">
       <div className="v2-inner overflow-y-auto">
@@ -36,10 +62,10 @@ export default function GroupDetail() {
           </div>
         )}
 
-        {/* Error banner — shown over static fallback data so the UI still renders */}
+        {/* Error banner — the group shown comes from the offline cache */}
         {error && !loading && (
           <div className="mx-5 mt-3 rounded-lg bg-yellow-50 border border-yellow-200 px-3.5 py-2.5 text-[12px] text-yellow-800">
-            Data langsung tidak tersedia — menampilkan data contoh.
+            Lagi gak bisa ambil data terbaru — menampilkan data terakhir yang tersimpan.
           </div>
         )}
 

@@ -25,7 +25,7 @@ export default function MembersOrbit() {
   // Route may include /app/anggota/:groupId
   const { id: groupId } = useParams();
 
-  // Live members from API — falls back to static MEMBERS on error.
+  // Mockup members in demo mode; live members (or none) in real mode.
   const { members: MEMBERS } = useMembers(groupId ?? null);
 
   const [revolving, setRevolving] = useState(false);

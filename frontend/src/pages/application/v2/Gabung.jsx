@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import "../../../styles/app-v2.css";
 import { useToast } from "../../../context/ToastContext";
 import { useJoinGroup } from "../../../hooks/useInvite";
+import { isDemoMode } from "../../../lib/appMode";
 import { ChevronLeft, Users, Split } from "../../../components/application/v2/icons";
 import { INVITE } from "../../../components/application/v2/undang/data";
 
@@ -15,21 +16,39 @@ import { INVITE } from "../../../components/application/v2/undang/data";
  *   .gabung-hero-grad-patungan — patungan purple gradient (160deg)
  *   Both include a desktop padding-top override via @media (min-width:1024px).
  */
+
+// Real-mode preview: no pre-join group lookup exists yet, so nothing here is
+// specific to the group — the real name comes back from the redeem call.
+const REAL_PREVIEW = {
+  group: {
+    name: "Grup Hyro",
+    type: "arisan",
+    typeLabel: "grup",
+    tagline: "Detail grup muncul setelah kamu gabung",
+    iuran: "—",
+    cadence: "",
+    members: 0,
+    capacity: "—",
+    admin: "—",
+  },
+  joined: [],
+};
 export default function Gabung() {
   const navigate = useNavigate();
   const toast = useToast();
   const [searchParams] = useSearchParams();
 
-  // The token comes from GabungMasuk via ?token=<code>. Fall back to the static
-  // sample invite code so the screen still works in the preview/screenshot flow.
-  const token = searchParams.get("token") ?? INVITE.code;
+  // Demo mode previews the static mockup invite. Real mode has no pre-join
+  // preview endpoint yet, so it shows a neutral card with no made-up details.
+  const demo = isDemoMode();
 
-  // TODO(wave2-auth): Supabase session token required for join() to work.
+  // The token comes from GabungMasuk (or a shared link) via ?token=<code>.
+  // Demo mode falls back to the sample code so the preview flow still works.
+  const token = searchParams.get("token") ?? (demo ? INVITE.code : null);
+
   const { join: joinGroup, loading: joining } = useJoinGroup();
 
-  // Static fallback group data — used while we haven't validated the token
-  // against a live API yet (validation is done in GabungMasuk).
-  const { group, joined } = INVITE;
+  const { group, joined } = demo ? INVITE : REAL_PREVIEW;
   const isArisan = group.type === "arisan";
   const [name, setName] = useState("");
 
@@ -38,19 +57,20 @@ export default function Gabung() {
       toast("Isi nama kamu dulu");
       return;
     }
-    // TODO(wave2-auth): Supabase session token required.
-    // The join() call uses the invite token resolved in GabungMasuk (or the
-    // static fallback code if QR decode is still mocked).
-    const result = await joinGroup(token);
-    if (result) {
-      toast(`Selamat datang di ${result.name ?? group.name}! 🎉`);
-    } else {
-      // On error: still navigate home with a success toast for MVP UX continuity.
-      // The backend call is wired correctly; a null result means 401/403 (no auth
-      // session yet) — that is expected in the anonymous MVP and handled by wave2-auth.
-      toast(`Selamat datang di ${group.name}! 🎉`);
+    if (!token) {
+      toast("Kode undangan gak ada — buka lagi tautan undangannya", "error");
+      return;
     }
-    navigate("/app");
+    // Demo mode: the demo API client answers the redeem call, no backend.
+    const result = await joinGroup(token);
+    if (!result) {
+      toast("Gagal gabung — undangan mungkin sudah kedaluwarsa atau penuh", "error");
+      return;
+    }
+    // Backend redeem returns { message, group: { id, name, … } }.
+    const joinedGroup = result.group;
+    toast(`Selamat datang di ${joinedGroup?.name ?? group.name}! 🎉`);
+    navigate(joinedGroup?.id ? `/app/grup/${joinedGroup.id}` : "/app");
   }
 
   return (

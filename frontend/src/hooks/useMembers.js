@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { contactsService, groupMembersService } from '../services';
 import { MEMBERS, DANCE_PARAMS } from '../components/application/v2/members/data';
+import { isDemoMode } from '../lib/appMode';
 
 /**
  * useMembers — loads contacts / group members for MembersOrbit.
@@ -9,7 +10,8 @@ import { MEMBERS, DANCE_PARAMS } from '../components/application/v2/members/data
  *   1. If groupId is provided → fetch groupMembersService.list(groupId)
  *   2. Otherwise → fetch contactsService.list() (all contacts)
  *
- * Falls back to static MEMBERS on error.
+ * Demo mode: the static MEMBERS mockup, no network.
+ * Real mode: live data only — an empty list on error or when there's nobody.
  *
  * @param {string|null} groupId – optional; when provided fetches members of that group.
  */
@@ -28,18 +30,19 @@ function initials(name = '') {
 }
 
 export function useMembers(groupId = null) {
-  const [members, setMembers] = useState(MEMBERS);
-  const [loading, setLoading] = useState(true);
+  const demo = isDemoMode();
+  const [members, setMembers] = useState(demo ? MEMBERS : []);
+  const [loading, setLoading] = useState(!demo);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (demo) return undefined;
     let cancelled = false;
 
     async function load() {
       setLoading(true);
       setError(null);
       try {
-        // TODO(wave2-auth): Supabase anonymous session token required.
         let raw = [];
         if (groupId) {
           raw = await groupMembersService.list(groupId);
@@ -50,8 +53,7 @@ export function useMembers(groupId = null) {
 
         if (cancelled) return;
         if (!Array.isArray(raw) || raw.length === 0) {
-          // Keep static fallback
-          setLoading(false);
+          setMembers([]);
           return;
         }
 
@@ -78,9 +80,9 @@ export function useMembers(groupId = null) {
         setMembers(mapped);
       } catch (err) {
         if (cancelled) return;
-        console.error('[useMembers] failed to load, using static fallback:', err.message);
+        console.error('[useMembers] failed to load:', err.message);
         setError(err.message);
-        // Keep static fallback from useState init
+        setMembers([]);
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -88,7 +90,7 @@ export function useMembers(groupId = null) {
 
     load();
     return () => { cancelled = true; };
-  }, [groupId]);
+  }, [groupId, demo]);
 
   // Always expose the DANCE_PARAMS so MembersOrbit can slice as needed
   return { members, danceParams: DANCE_PARAMS, loading, error };

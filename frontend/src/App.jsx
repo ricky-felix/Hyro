@@ -50,6 +50,7 @@ import RiwayatTransaksi from "./pages/application/v2/RiwayatTransaksi";
 import Onboarding from "./pages/application/v2/Onboarding";
 import RekeningPayout from "./pages/application/v2/RekeningPayout";
 import Bahasa from "./pages/application/v2/Bahasa";
+import { isDemoMode } from "./lib/appMode";
 
 // ── Landing page shell ────────────────────────────────────────
 // "/" renders the marketing landing page. "/login" redirects to the new
@@ -69,9 +70,10 @@ function ProtectedRoute({ children }) {
 
   if (loading) return <AppLoadingScreen />;
 
-  // TEMPORARY: the pre-launch password gate (see LoginOrRegister.jsx) grants
-  // access without a real session. Remove this line when the gate is removed.
-  if (sessionStorage.getItem("masuk_gate_unlocked") === "1") return children;
+  // TEMPORARY: the pre-launch demo password (see LoginOrRegister.jsx) grants
+  // access without a real session — demo mode runs on mockup data only.
+  // The real password still requires a login. Remove when the gate goes.
+  if (isDemoMode()) return children;
 
   if (!isAuthenticated) {
     // Build the returnTo value from the current path + search.

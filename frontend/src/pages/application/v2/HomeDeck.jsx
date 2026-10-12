@@ -24,7 +24,7 @@ import EmptyCard from "../../../components/application/v2/home/EmptyCard";
 // HomeDeck accepts an optional `cards` prop (used by Storybook / screenshot
 // routes). When omitted it fetches live data from the API via useHomeCards.
 export default function HomeDeck({ cards: cardsProp }) {
-  // Live data — falls back to ALL_CARDS on API error (see useHomeCards).
+  // Mockup cards in demo mode; live data (or the empty deck) in real mode.
   const { cards: liveCards, loading: cardsLoading } = useHomeCards();
   const cards = cardsProp ?? liveCards;
   const toast = useToast();
@@ -254,7 +254,10 @@ export default function HomeDeck({ cards: cardsProp }) {
           </button>
 
           {visibleCards.length === 0 ? (
-            cards.length === 0 ? (
+            cardsLoading && cardsProp == null ? (
+              // Live data still loading — don't flash the "empty account" card.
+              null
+            ) : cards.length === 0 ? (
               // Account genuinely empty (no arisan/patungan) — welcoming card.
               <EmptyCard
                 onCta={() => setComposeOpen(true)}

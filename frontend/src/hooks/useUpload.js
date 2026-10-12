@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { storageService } from '../services';
 import { supabase } from '../lib/supabase';
+import { isDemoMode } from '../lib/appMode';
 
 /**
  * useUpload — reusable hook for uploading a File to private Supabase Storage,
@@ -38,6 +39,15 @@ export function useUpload() {
 
     setUploading(true);
     setError(null);
+
+    // Demo mode: nothing leaves the browser — preview the local file instead.
+    if (isDemoMode()) {
+      setUploading(false);
+      return {
+        path: `demo/${fileName ?? file.name}`,
+        read_url: URL.createObjectURL(file),
+      };
+    }
 
     try {
       const filename = fileName ?? file.name;
