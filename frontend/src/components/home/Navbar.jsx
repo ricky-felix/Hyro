@@ -27,7 +27,7 @@ export function Navbar() {
           onClick={(e) => handleAnchorClick(e, "beranda")}
           aria-label="Hyro - Beranda"
         >
-          <img src="/Arisan-Digital-Logo-nobg.png" alt="Hyro" />
+          <img src="/hyro_logo_tricolor.png" alt="Hyro" />
           <span>Hyro</span>
         </a>
 
