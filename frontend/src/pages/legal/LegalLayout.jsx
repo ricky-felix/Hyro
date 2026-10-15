@@ -71,10 +71,10 @@ export function LegalLayout({ title, lastUpdated, intro, children }) {
           <p>
             Ada pertanyaan? Hubungi kami di{" "}
             <a
-              href="mailto:arisandigital@outlook.com"
+              href="mailto:hyro@gmail.com"
               className="font-semibold text-brand-primary hover:underline"
             >
-              arisandigital@outlook.com
+              hyro@gmail.com
             </a>
             .
           </p>

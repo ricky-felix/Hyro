@@ -121,7 +121,7 @@ export default function Bantuan() {
                 Tim kami siap membantu dalam 24 jam.
               </p>
               <a
-                href="mailto:arisandigital@outlook.com"
+                href="mailto:hyro@gmail.com"
                 className="flex items-center justify-center gap-2 rounded-[13px] bg-brand-primary px-4 py-3 text-[14px] font-bold text-white transition-colors hover:bg-brand-primary-hover"
                 aria-label="Kirim email ke tim dukungan Hyro"
               >
@@ -129,7 +129,7 @@ export default function Bantuan() {
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                   <polyline points="22,6 12,13 2,6" />
                 </svg>
-                arisandigital@outlook.com
+                hyro@gmail.com
               </a>
             </div>
           </div>

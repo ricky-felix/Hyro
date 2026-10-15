@@ -77,7 +77,7 @@ export function Footer() {
             <span>Lokasi</span>
             <p>Medan, Indonesia</p>
             <span>Email</span>
-            <a href="mailto:arisandigital@outlook.com">arisandigital@outlook.com</a>
+            <a href="mailto:hyro@gmail.com">hyro@gmail.com</a>
           </div>
         </div>
 

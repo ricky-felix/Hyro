@@ -109,7 +109,7 @@ const FAQS = [
     a: (
       <>
         Tim dukungan kami siap membantu melalui email di{" "}
-        <a href="mailto:arisandigital@outlook.com">arisandigital@outlook.com</a>.
+        <a href="mailto:hyro@gmail.com">hyro@gmail.com</a>.
         Kami biasanya merespons dalam waktu kurang dari 24 jam. Layanan dukungan
         via telepon belum tersedia untuk saat ini.
       </>

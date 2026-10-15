@@ -16,7 +16,7 @@ export function CTA() {
             <Link className="btn btn-emerald btn-lg" to={routes.app}>
               Coba Sekarang →
             </Link>
-            <a className="btn btn-ghost btn-lg" href="mailto:arisandigital@outlook.com">
+            <a className="btn btn-ghost btn-lg" href="mailto:hyro@gmail.com">
               Hubungi Kami
             </a>
           </div>

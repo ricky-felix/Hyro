@@ -179,10 +179,10 @@ export default function SyaratKetentuan() {
         <p>
           Untuk pertanyaan mengenai Syarat & Ketentuan ini, hubungi kami di{" "}
           <a
-            href="mailto:arisandigital@outlook.com"
+            href="mailto:hyro@gmail.com"
             className="font-semibold text-brand-primary hover:underline"
           >
-            arisandigital@outlook.com
+            hyro@gmail.com
           </a>
           .
         </p>

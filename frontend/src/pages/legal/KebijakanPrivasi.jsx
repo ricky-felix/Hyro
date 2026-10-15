@@ -115,10 +115,10 @@ export default function KebijakanPrivasi() {
         <p>
           Untuk menggunakan hak-hak ini, hubungi kami di{" "}
           <a
-            href="mailto:arisandigital@outlook.com"
+            href="mailto:hyro@gmail.com"
             className="font-semibold text-brand-primary hover:underline"
           >
-            arisandigital@outlook.com
+            hyro@gmail.com
           </a>
           .
         </p>
@@ -155,10 +155,10 @@ export default function KebijakanPrivasi() {
           Jika Anda memiliki pertanyaan atau keluhan terkait privasi, hubungi
           kami di{" "}
           <a
-            href="mailto:arisandigital@outlook.com"
+            href="mailto:hyro@gmail.com"
             className="font-semibold text-brand-primary hover:underline"
           >
-            arisandigital@outlook.com
+            hyro@gmail.com
           </a>{" "}
           — Medan, Indonesia.
         </p>

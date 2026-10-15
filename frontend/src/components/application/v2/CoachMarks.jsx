@@ -54,7 +54,7 @@ const STEPS = [
     body: "Ada pertanyaan atau butuh bantuan? Hubungi kami lewat email di bawah, atau cari Hyro di halaman Profil.",
     targets: [],
     tipSide: "center",
-    email: "arisandigital@outlook.com",
+    email: "hyro@gmail.com",
   },
 ];
 
